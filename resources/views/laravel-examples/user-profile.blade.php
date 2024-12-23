@@ -3,19 +3,6 @@
 @section('content')
 
 <div>
-    <div class="container-fluid">
-        <div class="card card-body blur shadow-blur">
-            <div class="row">
-                <div class="col-auto my-auto">
-                    <div class="h-100">
-                        <h5 class="mb-1">
-                            name
-                        </h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="container-fluid py-4">
         <div class="card">
             <div class="card-header pb-0 px-3">
@@ -80,7 +67,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
+                        <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Zapisz zmiany' }}</button>
                     </div>
                 </form>
 

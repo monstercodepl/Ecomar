@@ -14,6 +14,13 @@
             left: 'prev,next',
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+          },
+          buttonText: {
+            today:    'Dziś',
+  month:    'Miesiąć',
+  week:     'Tydzień',
+  day:      'Dzień',
+  list:     'Lista'
           }
         });
         calendar.render();
