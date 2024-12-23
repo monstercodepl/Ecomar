@@ -9,6 +9,7 @@
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
           locale: 'pl',
+          firstDay: '1',
           initialView: 'dayGridMonth',
           headerToolbar: {
             left: 'prev,next',
