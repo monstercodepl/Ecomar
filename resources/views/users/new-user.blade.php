@@ -51,6 +51,19 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="user.phone" class="form-control-label">Adres</label>
+                                <div class="@error('user.phone')border border-danger rounded-3 @enderror">
+                                    <select name="address" id="address" class="form-control">
+                                            <option value=""></option>
+                                        @foreach($addresses as $address)
+                                            <option value="{{$address->id}}">{{$address->adres}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">Zapisz</button>

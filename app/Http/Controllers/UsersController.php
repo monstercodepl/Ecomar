@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Address;
 
 
 class UsersController extends Controller
@@ -12,7 +13,9 @@ class UsersController extends Controller
     {
         $user = User::find($id);
 
-        return view('users/user', ['user' => $user]);
+        $addresses = Address::all();
+
+        return view('users/user', ['user' => $user, 'addresses' => $addresses]);
     }
 
     public function read()
@@ -27,6 +30,7 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
+        $user->address_id = $request->address;
         $user->save();
 
         $users = User::all();
@@ -35,7 +39,9 @@ class UsersController extends Controller
 
     public function create()
     {
-        return view('users/new-user');
+        $addresses = Address::all();
+
+        return view('users/new-user', ['addresses' => $addresses]);
     }
 
     public function save(Request $request)
@@ -45,6 +51,7 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->password = bcrypt('1bnf7as9acsd6fgbvtea6');
+        $user->address_id = $request->address;
         $user->save();
         
         $users = User::all();
