@@ -8,6 +8,8 @@ use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\JobController;
+use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -28,7 +30,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/', [HomeController::class, 'home']);
 	Route::get('dashboard', function () {
-		return view('dashboard');
+		$jobs = Job::all();
+
+		return view('dashboard', ['jobs' => $jobs]);
 	})->name('Admin');
 
 	Route::get('billing', function () {
@@ -50,6 +54,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/address/new', [AddressController::class, 'store'])->name('save-address');
 	Route::get('/address/{id}', [AddressController::class, 'show'])->name('address');
 	Route::put('/address', [AddressController::class, 'update']);
+
+	Route::get('/jobs', [JobController::class, 'index'])->name('jobs');
+	Route::get('/job/new', [JobController::class, 'create'])->name('create-job');
+	Route::post('/job/new', [JobController::class, 'store']);
 
 	Route::get('tables', function () {
 		return view('tables');

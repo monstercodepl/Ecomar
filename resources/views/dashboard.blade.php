@@ -17,11 +17,20 @@
           },
           buttonText: {
             today:    'Dziś',
-  month:    'Miesiąć',
-  week:     'Tydzień',
-  day:      'Dzień',
-  list:     'Lista'
-          }
+            month:    'Miesiąć',
+            week:     'Tydzień',
+            day:      'Dzień',
+            list:     'Lista'
+          },
+          events: [
+            @foreach($jobs as $job)
+              {
+                title: '{{$job->address->adres}} {{$job->address->numer}}',
+                start: '{{$job->schedule}}',
+                end: '{{$job->schedule}}'
+              },
+            @endforeach
+          ]
         });
         calendar.render();
       });
