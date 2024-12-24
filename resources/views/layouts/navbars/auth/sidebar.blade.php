@@ -38,7 +38,7 @@
         </a>
       </li>
       <li class="nav-item pb-2">
-        <a class="nav-link {{ (Request::is('addresses') ? 'active' : '') }}" href="{{ url('addresses') }}">
+        <a class="nav-link {{ (Request::is('faktury') ? 'active' : '') }}" href="{{ url('faktury') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <i style="font-size: 1rem;" class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ (Request::is('user-management') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
             </div>
@@ -54,7 +54,7 @@
         </a>
       </li>
       <li class="nav-item pb-2">
-        <a class="nav-link {{ (Request::is('addresses') ? 'active' : '') }}" href="{{ url('addresses') }}">
+        <a class="nav-link {{ (Request::is('trucks') ? 'active' : '') }}" href="{{ url('trucks') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <i style="font-size: 1rem;" class="fas fa-lg fa-list-ul ps-2 pe-2 text-center text-dark {{ (Request::is('user-management') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
             </div>

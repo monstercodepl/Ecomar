@@ -12,7 +12,9 @@ class TruckController extends Controller
      */
     public function index()
     {
-        //
+        $trucks = Truck::all();
+
+        return view('trucks/trucks', ['trucks' => $trucks]);
     }
 
     /**
@@ -20,7 +22,7 @@ class TruckController extends Controller
      */
     public function create()
     {
-        //
+        return view('trucks/new-truck');
     }
 
     /**
@@ -28,7 +30,14 @@ class TruckController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $truck = new Truck; 
+        $truck->registration = $request->registration;
+        $truck->capacity = $request->capacity;
+        $truck->save();
+
+        $trucks = Truck::all();
+
+        return view('trucks/trucks', ['trucks' => $trucks]);
     }
 
     /**
