@@ -10,6 +10,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\TruckController;
+use App\Http\Controllers\CatchmentController;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -63,6 +64,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/trucks', [TruckController::class, 'index'])->name('trucks');
 	Route::get('/truck/new', [TruckController::class, 'create'])->name('create-truck');
 	Route::post('/truck/new', [TruckController::class, 'store']);
+
+	Route::get('/catchments', [CatchmentController::class, 'index'])->name('catchments');
+	Route::get('/catchment/new', [CatchmentController::class, 'create'])->name('create-catchment');
+	Route::post('/catchment/new', [CatchmentController::class, 'store']);
 
 	Route::get('/faktury', function () {
 		return view('billing');
