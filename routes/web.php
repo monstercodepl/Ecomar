@@ -11,6 +11,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\TruckController;
 use App\Http\Controllers\CatchmentController;
+use App\Http\Controllers\WorkController;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -51,6 +52,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/user/{id}', [UsersController::class, 'show'])->name('user');
 	Route::put('/user', [UsersController::class, 'update']);
 
+	Route::get('/drivers', [UsersController::class, 'drivers'])->name('drivers');
+	Route::get('/driver/new', [UsersController::class, 'createDriver'])->name('create-driver');
+	Route::post('/driver/new', [UsersController::class, 'saveDriver'])->name('save_driver');
+
 	Route::get('/addresses', [AddressController::class, 'index'])->name('addresses');
 	Route::get('/address/new', [AddressController::class, 'create'])->name('create-address');
 	Route::post('/address/new', [AddressController::class, 'store'])->name('save-address');
@@ -68,6 +73,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/catchments', [CatchmentController::class, 'index'])->name('catchments');
 	Route::get('/catchment/new', [CatchmentController::class, 'create'])->name('create-catchment');
 	Route::post('/catchment/new', [CatchmentController::class, 'store']);
+
+	Route::get('/work', [WorkController::class, 'jobs'])->name('work');
+	Route::post('/work/pump', [WorkController::class, 'pump']);
+	Route::post('/work/dump', [WorkController::class, 'dump']);
 
 	Route::get('/faktury', function () {
 		return view('billing');

@@ -51,5 +51,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Address::class);
     }
-    
+
+    public function truck(): BelongsTo
+    {
+        return $this->belongsTo(Truck::class);
+    }   
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Address;
+use App\Models\Truck;
 
 
 class UsersController extends Controller
@@ -56,5 +57,32 @@ class UsersController extends Controller
         
         $users = User::all();
         return view('users/users', ['users' => $users]);
+    }
+
+    public function drivers()
+    {
+        $users = User::whereNotNull('truck_id')->get();
+
+        return view('drivers/drivers', ['users' => $users]);
+    }
+
+    public function createDriver()
+    {
+
+        $users = User::where('truck_id', null)->get();
+        $trucks = Truck::doesntHave('user')->get();
+
+        return view('drivers/new-driver', ['users' => $users, 'trucks' => $trucks]);
+    }
+
+    public function saveDriver(Request $request)
+    {
+        $user = User::find($request->user);
+        $user->truck_id = $request->truck;
+        $user->save();
+
+        $users = User::where('truck_id', true)->get();
+
+        return view('drivers/drivers', ['users' => $users]);
     }
 }
