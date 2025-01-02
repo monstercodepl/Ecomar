@@ -46,7 +46,11 @@
                                             <p class="text-xs font-weight-bold mb-0">{{$truck->capacity}}</p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">n/i</p>
+                                            <form method="POST" action="truck/delete">
+                                                @csrf
+                                                <input type="hidden" name="truck_id" value="{{$truck->id}}">
+                                                <button type="submit" class="btn bg-danger text-white btn-md mt-4 mb-4">Usuń</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

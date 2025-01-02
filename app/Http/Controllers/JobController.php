@@ -74,8 +74,11 @@ class JobController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Job $job)
+    public function destroy(Request $request)
     {
-        //
+        $job = Job::find($request->job_id);
+        $job->delete();
+
+        return redirect('jobs');
     }
 }

@@ -9,9 +9,9 @@
                 <div class="card-header pb-0">
                     <div class="d-flex flex-row justify-content-between">
                         <div>
-                            <h5 class="mb-0">Wszystkie zlewnie</h5>
+                            <h5 class="mb-0">Wszystkie strefy</h5>
                         </div>
-                        <a href="{{route('create-catchment')}}" class="btn bg-gradient-primary btn-sm mb-0" type="button">+&nbsp; Nowa zlewnia</a>
+                        <a href="{{route('create-zone')}}" class="btn bg-gradient-primary btn-sm mb-0" type="button">+&nbsp; Nowa strefa</a>
                     </div>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
@@ -23,7 +23,10 @@
                                         ID
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Nowa zlewnia
+                                        Nazwa
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Cena
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Akcje
@@ -31,18 +34,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($catchments as $catchment)
+                                @foreach ($zones as $zone)
                                     <tr>
                                         <td class="ps-4">
-                                            <p class="text-xs font-weight-bold mb-0">{{$catchment->id}}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{$zone->id}}</p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$catchment->name}}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{$zone->name}}</p>
                                         </td>
                                         <td class="text-center">
-                                            <form method="POST" action="catchment/delete">
+                                            <p class="text-xs font-weight-bold mb-0">{{$zone->price}}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <form method="POST" action="zone/delete">
                                                 @csrf
-                                                <input type="hidden" name="catchment_id" value="{{$catchment->id}}">
+                                                <input type="hidden" name="zone_id" value="{{$zone->id}}">
                                                 <button type="submit" class="btn bg-danger text-white btn-md mt-4 mb-4">Usuń</button>
                                             </form>
                                         </td>

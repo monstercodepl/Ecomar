@@ -12,6 +12,7 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\TruckController;
 use App\Http\Controllers\CatchmentController;
 use App\Http\Controllers\WorkController;
+use App\Http\Controllers\ZoneController;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -61,22 +62,36 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/address/new', [AddressController::class, 'store'])->name('save-address');
 	Route::get('/address/{id}', [AddressController::class, 'show'])->name('address');
 	Route::put('/address', [AddressController::class, 'update']);
+	Route::post('/address/delete', [AddressController::class, 'destroy']);
 
 	Route::get('/jobs', [JobController::class, 'index'])->name('jobs');
 	Route::get('/job/new', [JobController::class, 'create'])->name('create-job');
 	Route::post('/job/new', [JobController::class, 'store']);
+	Route::post('/job/delete', [JobController::class, 'destroy']);
 
 	Route::get('/trucks', [TruckController::class, 'index'])->name('trucks');
 	Route::get('/truck/new', [TruckController::class, 'create'])->name('create-truck');
 	Route::post('/truck/new', [TruckController::class, 'store']);
+	Route::post('/truck/delete', [TruckController::class, 'destroy']);
+
+	Route::get('/zones', [ZoneController::class, 'index'])->name('zones');
+	Route::get('/zone/new', [ZoneController::class, 'create'])->name('create-zone');
+	Route::post('zone/new', [ZoneController::class, 'store']);
+	Route::post('/zone/delete', [ZoneController::class, 'destroy']);
 
 	Route::get('/catchments', [CatchmentController::class, 'index'])->name('catchments');
 	Route::get('/catchment/new', [CatchmentController::class, 'create'])->name('create-catchment');
 	Route::post('/catchment/new', [CatchmentController::class, 'store']);
+	Route::post('/catchment/delete', [CatchmentController:: class, 'destroy']);
 
 	Route::get('/work', [WorkController::class, 'jobs'])->name('work');
 	Route::post('/work/pump', [WorkController::class, 'pump']);
 	Route::post('/work/dump', [WorkController::class, 'dump']);
+	Route::post('/work/status', [WorkController::class, 'status']);
+
+	Route::get('/sms', function () {
+		return view('/sms/settings');
+	});
 
 	Route::get('/faktury', function () {
 		return view('billing');

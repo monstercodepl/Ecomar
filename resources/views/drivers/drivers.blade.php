@@ -58,7 +58,7 @@
                                             <p class="text-xs font-weight-bold mb-0">n/i</p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$user->truck->registration}}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{$user->truck->registration ?? 'brak'}}</p>
                                         </td>
                                         <td class="text-center">
                                             <span class="text-secondary text-xs font-weight-bold">{{$user->created_at}}</span>

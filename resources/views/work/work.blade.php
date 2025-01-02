@@ -17,35 +17,44 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <p><b>Numer rejestracyny: </b>{{$truck->registration}}</p>
+                                <p><b>Numer rejestracyny: </b>{{$truck->registration ?? 'n/d'}}</p>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <p><b>Pojemność: </b>{{$truck->capacity}}</p>
+                                <p><b>Pojemność: </b>{{$truck->capacity ?? 'n/d'}}</p>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <p><b>Zapełnienie: </b>{{$truck->amount}}</p>
+                                <p><b>Zapełnienie: </b>{{$truck->amount ?? 'n/d'}}</p>
                             </div>
                         </div>
                     </div>
                     <div class="row">
+                        @if($truck)
                         <div class="col-md-6">
                             <div class="form-group">
                             <form method="POST" action="work/dump">
                                         @csrf
                                             <input type="hidden" name="truck_id" value="{{$truck->id}}">
-                                            Zlano: <input type="number" name="amount">
-                                            <input type="submit">
+                                            Zlewnia: 
+                                            <select name="zone_id" id="address" class="form-control">
+                                                    <option value=""></option>
+                                                @foreach($catchments as $catchment)
+                                                    <option value="{{$catchment->id}}">{{$catchment->name}}</option>
+                                                @endforeach
+                                            </select><br>
+                                            Zlano: <input type="number" name="amount" class="form-control">
+                                            <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">Zapisz</button>
                                             </form>
                             </div>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -99,7 +108,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{$job->id}}</p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->adres}} {{$job->address->numer}}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->adres ?? ''}} {{$job->address->numer ?? 'brak'}}</p>
                                         </td>
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">{{$job->user->name}}</p>
@@ -111,7 +120,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{$job->status}}</p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->zbiornik}}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->zbiornik ?? 'brak'}}</p>
                                         </td>
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">{{$job->pumped}}</p>
@@ -122,7 +131,13 @@
                                             <input type="hidden" name="job_id" value="{{$job->id}}">
                                             Wypompowano:<br> <input type="number" name="amount"><br>
                                             <input type="submit">
-                                            </form>
+                                        </form>
+                                        <form method="POST" action="work/status">
+                                            @csrf
+                                            <input type="hidden" name="job_id" value="{{$job->id}}">
+                                            <input type="hidden" name="status" value="pumped">
+                                            <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">Zakończ</button>
+                                        </form>
                                         </td>
                                     </tr>
                                 @endforeach

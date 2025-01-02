@@ -41,6 +41,9 @@
                                         Zbiornik
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Strefa
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Akcje
                                     </th>
                                 </tr>
@@ -70,12 +73,14 @@
                                             <p class="text-xs font-weight-bold mb-0">{{$address->zbiornik}}</p>
                                         </td>
                                         <td class="text-center">
-                                            <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                                <i class="fas fa-user-edit text-secondary"></i>
-                                            </a>
-                                            <span>
-                                                <i class="cursor-pointer fas fa-trash text-secondary">n/i </i>
-                                            </span>
+                                            <p class="text-xs font-weight-bold mb-0">{{$address->zone->name ?? 'brak'}}</p>
+                                        </td>
+                                        <td class="text-center">
+                                        <form method="POST" action="address/delete">
+                                            @csrf
+                                            <input type="hidden" name="address_id" value="{{$address->id}}">
+                                            <button type="submit" class="btn bg-danger text-white btn-md mt-4 mb-4">Usuń</button>
+                                        </form>
                                         </td>
                                     </tr>
                                 @endforeach

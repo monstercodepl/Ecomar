@@ -25,8 +25,14 @@ class CatchmentController extends Controller
         $catchment->name = $request->name;
         $catchment->save();
 
-        $catchments = Catchment::all();
+        return redirect('/catchments');
+    }
 
-        return view('catchments/catchments', ['catchments' => $catchments]);
+    public function destroy(Request $request)
+    {
+        $catchment = Catchment::find($request->catchment_id);
+        $catchment->delete();
+
+        return redirect('/catchments');
     }
 }

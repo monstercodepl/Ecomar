@@ -72,6 +72,21 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label for="user.phone" class="form-control-label">Strefa</label>
+                                <div class="@error('user.phone')border border-danger rounded-3 @enderror">
+                                    <select name="zone_id" id="address" class="form-control">
+                                            <option value=""></option>
+                                        @foreach($zones as $zone)
+                                            <option @if($zone->id == $address->zone_id) selected @endif value="{{$zone->id}}">{{$zone->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label for="user.phone" class="form-control-label">Aglomeracja</label>
                                 <div class="@error('user.phone')border border-danger rounded-3 @enderror">
                                     <input class="" type="checkbox" id="number" name="aglomeracja" @if($address->aglomeracja) checked @endif>

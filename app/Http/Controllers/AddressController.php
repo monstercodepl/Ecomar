@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 
 class AddressController extends Controller
@@ -22,7 +23,9 @@ class AddressController extends Controller
      */
     public function create()
     {
-        return view('address/new-address');
+        $zones = Zone::all();
+
+        return view('address/new-address', ['zones' => $zones]);
     }
 
     /**
@@ -37,11 +40,12 @@ class AddressController extends Controller
         $address->miasto = $request->miasto;
         $address->aglomeracja = $request->has('aglomeracja');
         $address->zbiornik = $request->zbiornik;
+        $address->zone_id = $request->zone_id;
         $address->save();
 
         $addresses = Address::all();
 
-        return view('address/addresses', ['addresses' => $addresses]);
+        return redirect('addresses');
     }
 
     /**
@@ -50,8 +54,9 @@ class AddressController extends Controller
     public function show($id)
     {
         $address = Address::find($id);
+        $zones = Zone::all();
 
-        return view('address/address', ['address' => $address]);
+        return view('address/address', ['address' => $address, 'zones' => $zones]);
     }
 
     /**
@@ -74,18 +79,22 @@ class AddressController extends Controller
         $address->miasto = $request->miasto;
         $address->aglomeracja = $request->has('aglomeracja');
         $address->zbiornik = $request->zbiornik;
+        $address->zone_id = $request->zone_id;
         $address->save();
 
         $addresses = Address::all();
 
-        return view('address/addresses', ['addresses' => $addresses]);
+        return redirect('addresses');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Address $address)
+    public function destroy(Request $request)
     {
-        //
+        $address = Address::find($request->address_id);
+        $address->delete();
+        
+        return redirect('addresses');
     }
 }

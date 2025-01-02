@@ -46,7 +46,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{$job->id}}</p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->adres}} {{$job->address->numer}}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->adres ?? ''}} {{$job->address->numer ?? 'brak'}}</p>
                                         </td>
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">{{$job->user->name}}</p>
@@ -58,12 +58,11 @@
                                             <p class="text-xs font-weight-bold mb-0">{{$job->status}}</p>
                                         </td>
                                         <td class="text-center">
-                                            <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                                <i class="fas fa-user-edit text-secondary"></i>
-                                            </a>
-                                            <span>
-                                                <i class="cursor-pointer fas fa-trash text-secondary">n/i </i>
-                                            </span>
+                                            <form method="POST" action="job/delete">
+                                                @csrf
+                                                <input type="hidden" name="job_id" value="{{$job->id}}">
+                                                <button type="submit" class="btn bg-danger text-white btn-md mt-4 mb-4">Usuń</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

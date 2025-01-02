@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Work;
 use App\Models\Job;
 use App\Models\Truck;
+use App\Models\Catchment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,9 +17,10 @@ class WorkController extends Controller
         $jobs = Job::all();
         $user = Auth::user();
         $truck = $user->truck;
+        $catchments = Catchment::all();
 
 
-        return view('work/work', ['jobs' => $jobs, 'truck' => $truck]);
+        return view('work/work', ['jobs' => $jobs, 'truck' => $truck, 'catchments' => $catchments]);
     }
 
     public function pump(Request $request)
@@ -59,6 +61,15 @@ class WorkController extends Controller
         $truck = $user->truck;
         $truck->amount = $truck->amount - $request->amount;
         $truck->save();
+
+        return redirect('work');
+    }
+
+    public function status(Request $request)
+    {
+        $job = Job::find($request->job_id);
+        $job->status = $request->status;
+        $job->save();
 
         return redirect('work');
     }

@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Truck;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 
-class TruckController extends Controller
+class ZoneController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $trucks = Truck::all();
+        $zones = Zone::all();
 
-        return view('trucks/trucks', ['trucks' => $trucks]);
+        return view('zones/zones', ['zones' => $zones]);
     }
 
     /**
@@ -22,7 +22,7 @@ class TruckController extends Controller
      */
     public function create()
     {
-        return view('trucks/new-truck');
+        return view('zones/new-zone');
     }
 
     /**
@@ -30,20 +30,18 @@ class TruckController extends Controller
      */
     public function store(Request $request)
     {
-        $truck = new Truck; 
-        $truck->registration = $request->registration;
-        $truck->capacity = $request->capacity;
-        $truck->save();
+        $zone = new Zone;
+        $zone->name = $request->name;
+        $zone->price = $request->price;
+        $zone->save();
 
-        $trucks = Truck::all();
-
-        return view('trucks/trucks', ['trucks' => $trucks]);
+        return redirect('zones');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Truck $truck)
+    public function show(Zone $zone)
     {
         //
     }
@@ -51,7 +49,7 @@ class TruckController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Truck $truck)
+    public function edit(Zone $zone)
     {
         //
     }
@@ -59,7 +57,7 @@ class TruckController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Truck $truck)
+    public function update(Request $request, Zone $zone)
     {
         //
     }
@@ -69,9 +67,9 @@ class TruckController extends Controller
      */
     public function destroy(Request $request)
     {
-        $truck = Truck::find($request->truck_id);
-        $truck->delete();
+        $zone = Zone::find($request->zone_id);
+        $zone->delete();
 
-        return redirect('trucks');
+        return redirect('zones');
     }
 }
