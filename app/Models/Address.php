@@ -14,4 +14,9 @@ class Address extends Model
     {
         return $this->belongsTo(Zone::class);
     }
+
+    public function municipality(): BelongsTo
+    {
+        return $this->belongsTo(Municipality::class);
+    }
 }

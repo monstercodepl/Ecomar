@@ -13,6 +13,7 @@ use App\Http\Controllers\TruckController;
 use App\Http\Controllers\CatchmentController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\ZoneController;
+use App\Http\Controllers\MunicipalityController;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -78,6 +79,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/zone/new', [ZoneController::class, 'create'])->name('create-zone');
 	Route::post('zone/new', [ZoneController::class, 'store']);
 	Route::post('/zone/delete', [ZoneController::class, 'destroy']);
+
+	Route::get('/municipalities', [MunicipalityController::class, 'index'])->name('municipalities');
+	Route::get('/municipality/new', [MunicipalityController::class, 'create'])->name('create-municipality');
+	Route::post('/municipality/new', [MunicipalityController::class, 'store']);
+	Route::post('/municipality/delete', [MunicipalityController::class, 'destroy']);
 
 	Route::get('/catchments', [CatchmentController::class, 'index'])->name('catchments');
 	Route::get('/catchment/new', [CatchmentController::class, 'create'])->name('create-catchment');

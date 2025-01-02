@@ -55,7 +55,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{$address->id}}</p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$address->gmina}}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{$address->municipality->name ?? 'brak'}}</p>
                                         </td>
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">{{$address->aglomeracja}}</p>
@@ -64,7 +64,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{$address->miasto}}</p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0"><a href="{{ route('address', array('id' => $address->id)) }}">{{$address->adres}}</a></p>
+                                            <p class="text-xs font-weight-bold mb-0">{{$address->adres}}</p>
                                         </td>
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">{{$address->numer}}</p>
@@ -79,8 +79,11 @@
                                         <form method="POST" action="address/delete">
                                             @csrf
                                             <input type="hidden" name="address_id" value="{{$address->id}}">
-                                            <button type="submit" class="btn bg-danger text-white btn-md mt-4 mb-4">Usuń</button>
+                                            <button type="submit" class="btn bg-danger text-white btn-md ">Usuń</button>
                                         </form>
+                                        <a href="{{ route('address', array('id' => $address->id)) }}">
+                                            <button class="btn bg-wargning btn-md">Edytuj</button>
+                                        </a>
                                         </td>
                                     </tr>
                                 @endforeach

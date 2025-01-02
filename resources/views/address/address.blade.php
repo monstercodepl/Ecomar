@@ -48,7 +48,12 @@
                             <div class="form-group">
                                 <label for="user.phone" class="form-control-label">Gmina</label>
                                 <div class="@error('user.phone')border border-danger rounded-3 @enderror">
-                                    <input class="form-control" type="text" placeholder="Gmina" id="number" name="gmina" value="{{$address->gmina}}">
+                                    <select name="municipality" id="address" class="form-control">
+                                        <option value=""></option>
+                                        @foreach($municipalities as $municipality)
+                                            <option @if($municipality->id == ($address->municipality->id ?? '')) selected @endif value="{{$municipality->id}}">{{$municipality->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>

@@ -26,7 +26,7 @@
           events: [
             @foreach($jobs as $job)
               {
-                title: '{{$job->address->adres}} {{$job->address->numer}}',
+                title: "{{$job->address->adres ?? ''}} {{$job->address->numer ?? 'brak'}}",
                 start: '{{$job->schedule}}',
                 end: '{{$job->schedule}}'
               },

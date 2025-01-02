@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use App\Models\Zone;
+use App\Models\Municipality;
 use Illuminate\Http\Request;
 
 class AddressController extends Controller
@@ -24,8 +25,9 @@ class AddressController extends Controller
     public function create()
     {
         $zones = Zone::all();
-
-        return view('address/new-address', ['zones' => $zones]);
+        $municipalities = Municipality::all();
+        
+        return view('address/new-address', ['zones' => $zones, 'municipalities' => $municipalities]);
     }
 
     /**
@@ -36,7 +38,7 @@ class AddressController extends Controller
         $address = new Address;
         $address->numer = $request->numer;
         $address->adres = $request->ulica;
-        $address->gmina = $request->gmina;
+        $address->municipality_id = $request->municipality;
         $address->miasto = $request->miasto;
         $address->aglomeracja = $request->has('aglomeracja');
         $address->zbiornik = $request->zbiornik;
@@ -55,8 +57,9 @@ class AddressController extends Controller
     {
         $address = Address::find($id);
         $zones = Zone::all();
+        $municipalities = Municipality::all();
 
-        return view('address/address', ['address' => $address, 'zones' => $zones]);
+        return view('address/address', ['address' => $address, 'zones' => $zones, 'municipalities' => $municipalities]);
     }
 
     /**
@@ -75,7 +78,7 @@ class AddressController extends Controller
         $address = Address::find($request->id);
         $address->numer = $request->numer;
         $address->adres = $request->ulica;
-        $address->gmina = $request->gmina;
+        $address->municipality_id = $request->municipality;
         $address->miasto = $request->miasto;
         $address->aglomeracja = $request->has('aglomeracja');
         $address->zbiornik = $request->zbiornik;
@@ -94,7 +97,7 @@ class AddressController extends Controller
     {
         $address = Address::find($request->address_id);
         $address->delete();
-        
+
         return redirect('addresses');
     }
 }
