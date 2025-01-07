@@ -24,6 +24,34 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
+                                <p><b>Numer vin: </b>{{$truck->vin ?? 'n/d'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <p><b>Numer polisy: </b>{{$truck->oc_number ?? 'n/d'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <p><b>Data polisy: </b>{{$truck->oc_date ?? 'n/d'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <p><b>Data przeglądu: </b>{{$truck->inspection_date ?? 'n/d'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <p><b>Pojemność: </b>{{$truck->capacity ?? 'n/d'}}</p>
                             </div>
                         </div>

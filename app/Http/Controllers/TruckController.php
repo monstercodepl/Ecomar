@@ -33,11 +33,16 @@ class TruckController extends Controller
         $truck = new Truck; 
         $truck->registration = $request->registration;
         $truck->capacity = $request->capacity;
+        $truck->vin = $request->vin;
+        $truck->oc_date = $request->oc_date;
+        $truck->oc_number = $request->oc_number;
+        $truck->inspection_date = $request->inspection_date;
+        $truck->amount = 0;
         $truck->save();
 
         $trucks = Truck::all();
 
-        return view('trucks/trucks', ['trucks' => $trucks]);
+        return redirect('trucks');
     }
 
     /**

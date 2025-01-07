@@ -6,6 +6,7 @@ use App\Models\Job;
 use App\Models\User;
 use App\Models\Address;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JobController extends Controller
 {
@@ -17,6 +18,15 @@ class JobController extends Controller
         $jobs = Job::all();
 
         return view('jobs/jobs', ['jobs' => $jobs]);
+    }
+
+    public function index_client()
+    {
+        $user = Auth::user();
+
+        $jobs = Job::where('user_id', $user->id)->get();
+
+        return view('jobs/my_jobs', ['jobs' => $jobs]);
     }
 
     /**
@@ -50,9 +60,11 @@ class JobController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Job $job)
+    public function show($id)
     {
-        //
+        $job = Job::find($id);
+        
+        return view('jobs/job', ['job' => $job]);
     }
 
     /**
@@ -66,9 +78,13 @@ class JobController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Job $job)
+    public function update(Request $request)
     {
-        //
+        $job = Job::find($request->id);
+        $job->schedule = $request->date;
+        $job->save();
+
+        return redirect('jobs');
     }
 
     /**

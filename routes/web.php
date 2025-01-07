@@ -66,7 +66,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/address/delete', [AddressController::class, 'destroy']);
 
 	Route::get('/jobs', [JobController::class, 'index'])->name('jobs');
+	Route::get('/moje-zlecenia', [JobController::class, 'index_client'])->name('client_jobs');
+	Route::post('/job', [JobController::class, 'update']);
 	Route::get('/job/new', [JobController::class, 'create'])->name('create-job');
+	Route::get('/job/{id}', [JobController::class, 'show'])->name('job');
 	Route::post('/job/new', [JobController::class, 'store']);
 	Route::post('/job/delete', [JobController::class, 'destroy']);
 

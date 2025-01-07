@@ -42,6 +42,42 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="user-name" class="form-control-label">Numer vin</label>
+                                <div class="@error('user.name')border border-danger rounded-3 @enderror">
+                                    <input class="form-control" type="text" placeholder="Numer vin" id="user-name" name="vin">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="user-email" class="form-control-label">Data polisy</label>
+                                <div class="@error('email')border border-danger rounded-3 @enderror">
+                                    <input class="form-control" type="datetime-local"  id="user-email" name="oc_date">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="user-email" class="form-control-label">Data przegladu</label>
+                                <div class="@error('email')border border-danger rounded-3 @enderror">
+                                    <input class="form-control" type="datetime-local"  id="user-email" name="inspection_date">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="user-name" class="form-control-label">Numer polisy</label>
+                                <div class="@error('user.name')border border-danger rounded-3 @enderror">
+                                    <input class="form-control" type="text" placeholder="Numer polisy" id="user-name" name="oc_number">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">Zapisz</button>
                     </div>
