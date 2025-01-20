@@ -49,6 +49,7 @@
                                             <form method="POST" action="zone/delete">
                                                 @csrf
                                                 <input type="hidden" name="zone_id" value="{{$zone->id}}">
+                                                <a href="{{ route('zone', array('id' => $zone->id)) }}"><button type="button" class="btn bg-warning text-white btn-md mt-4 mb-4">Edytuj</button></a>
                                                 <button type="submit" class="btn bg-danger text-white btn-md mt-4 mb-4">Usuń</button>
                                             </form>
                                         </td>

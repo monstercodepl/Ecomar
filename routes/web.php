@@ -81,6 +81,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/zones', [ZoneController::class, 'index'])->name('zones');
 	Route::get('/zone/new', [ZoneController::class, 'create'])->name('create-zone');
 	Route::post('zone/new', [ZoneController::class, 'store']);
+	Route::get('/zone/{id}', [ZoneController::class, 'show'])->name('zone');
+	Route::put('/zone', [ZoneController::class, 'update']);
 	Route::post('/zone/delete', [ZoneController::class, 'destroy']);
 
 	Route::get('/municipalities', [MunicipalityController::class, 'index'])->name('municipalities');

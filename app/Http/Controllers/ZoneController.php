@@ -41,9 +41,11 @@ class ZoneController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Zone $zone)
+    public function show($id)
     {
-        //
+        $zone = Zone::find($id);
+
+        return view('/zones/zone', ['zone' => $zone]);
     }
 
     /**
@@ -59,7 +61,12 @@ class ZoneController extends Controller
      */
     public function update(Request $request, Zone $zone)
     {
-        //
+        $zone = $zone::find($request->id);
+        $zone->name = $request->name;
+        $zone->price = $request->price;
+        $zone->save();
+
+        return redirect('zones');
     }
 
     /**

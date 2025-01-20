@@ -66,6 +66,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="user.phone" class="form-control-label">Numer NIP</label>
+                                <div class="@error('user.phone')border border-danger rounded-3 @enderror">
+                                    <input class="form-control" type="text" placeholder="NIP" name="nip" value="{{$user->nip}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">Zapisz zmiany</button>
                     </div>

@@ -32,10 +32,11 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->address_id = $request->address;
+        $user->nip = $request->nip;
         $user->save();
 
         $users = User::all();
-        return view('users/users', ['users' => $users]);
+        return redirect('user-management');;
     }
 
     public function create()
@@ -53,10 +54,11 @@ class UsersController extends Controller
         $user->phone = $request->phone;
         $user->password = bcrypt('1bnf7as9acsd6fgbvtea6');
         $user->address_id = $request->address;
+        $user->nip = $request->nip;
         $user->save();
         
         $users = User::all();
-        return view('users/users', ['users' => $users]);
+        return redirect('user-management');
     }
 
     public function drivers()

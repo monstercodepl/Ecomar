@@ -8,7 +8,7 @@
                 <div class="col-auto my-auto">
                     <div class="h-100">
                         <h5 class="mb-1">
-                            Nowa strefa
+                            {{$zone->name}}
                         </h5>
                     </div>
                 </div>
@@ -21,15 +21,16 @@
                 <h6 class="mb-0">Dane</h6>
             </div>
             <div class="card-body pt-4 p-3">
-                <form action="/zone/new" method="POST" role="form text-left">
+                <form action="/zone" method="POST" role="form text-left">
                     @csrf
-                    @method('POST')
+                    @method('PUT')
+                    <input type="hidden" name="id" value="{{$zone->id}}">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="user-name" class="form-control-label">Nazwa</label>
                                 <div class="@error('user.name')border border-danger rounded-3 @enderror">
-                                    <input class="form-control" type="text" placeholder="Nazwa" id="user-name" name="name">
+                                    <input class="form-control" type="text" placeholder="Nazwa" id="user-name" name="name" value="{{$zone->name}}">
                                 </div>
                             </div>
                         </div>
@@ -37,7 +38,7 @@
                             <div class="form-group">
                                 <label for="user-email" class="form-control-label">Cena</label>
                                 <div class="@error('email')border border-danger rounded-3 @enderror">
-                                    <input class="form-control" type="number" step="0.01" min="0" placeholder="15.00" id="user-email" name="price">
+                                    <input class="form-control" type="number" step="0.01" min="0" placeholder="15.00" id="user-email" name="price" value="{{$zone->price}}">
                                 </div>
                             </div>
                         </div>
