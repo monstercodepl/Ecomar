@@ -13,78 +13,89 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body pt-4 pb-2">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <p><b>Numer rejestracyny: </b>{{$truck->registration ?? 'n/d'}}</p>
+                <div class="row card-body pt-4 pb-2">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <p><b>Numer rejestracyny: </b>{{$truck->registration ?? 'n/d'}}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <p><b>Numer vin: </b>{{$truck->vin ?? 'n/d'}}</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <p><b>Numer vin: </b>{{$truck->vin ?? 'n/d'}}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <p><b>Numer polisy: </b>{{$truck->oc_number ?? 'n/d'}}</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <p><b>Numer polisy: </b>{{$truck->oc_number ?? 'n/d'}}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <p><b>Data polisy: </b>{{$truck->oc_date ?? 'n/d'}}</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <p><b>Data polisy: </b>{{$truck->oc_date ?? 'n/d'}}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <p><b>Data przeglądu: </b>{{$truck->inspection_date ?? 'n/d'}}</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <p><b>Data przeglądu: </b>{{$truck->inspection_date ?? 'n/d'}}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <p><b>Pojemność: </b>{{$truck->capacity ?? 'n/d'}}</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <p><b>Pojemność: </b>{{$truck->capacity ?? 'n/d'}}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <p><b>Zapełnienie: </b>{{$truck->amount ?? 'n/d'}}</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <p><b>Zapełnienie: </b>{{$truck->amount ?? 'n/d'}}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        @if($truck)
-                        <div class="col-md-6">
-                            <div class="form-group">
-                            <form method="POST" action="work/dump">
-                                        @csrf
-                                            <input type="hidden" name="truck_id" value="{{$truck->id}}">
-                                            Zlewnia: 
-                                            <select name="zone_id" id="address" class="form-control">
-                                                    <option value=""></option>
-                                                @foreach($catchments as $catchment)
-                                                    <option value="{{$catchment->id}}">{{$catchment->name}}</option>
-                                                @endforeach
-                                            </select><br>
-                                            Zlano: <input type="number" name="amount" class="form-control">
-                                            <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">Zapisz</button>
-                                            </form>
+                        <div class="row">
+                            @if($truck)
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                <form method="POST" action="work/dump">
+                                            @csrf
+                                                <input type="hidden" name="truck_id" value="{{$truck->id}}">
+                                                Zlewnia: 
+                                                <select name="zone_id" id="address" class="form-control">
+                                                        <option value=""></option>
+                                                    @foreach($catchments as $catchment)
+                                                        <option value="{{$catchment->id}}">{{$catchment->name}}</option>
+                                                    @endforeach
+                                                </select><br>
+                                                Zlano: <input type="number" name="amount" class="form-control">
+                                                <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">Zapisz</button>
+                                                </form>
+                                </div>
                             </div>
+                            @endif
                         </div>
-                        @endif
                     </div>
+                    <div class="col-6">
+                    @foreach($truck_jobs as $truck_job)
+                        <b>ID: </b>{{$truck_job->id}}</br>
+                        <b>Klient: </b>{{$truck_job->user->name}}</br>
+                        <b>Adres: </b>{{$truck_job->address->adres}}</br>
+                        <b>Wypompowane: </b>{{$truck_job->pumped}}</br><br>
+                    @endforeach   
                 </div>
+                </div>
+                
             </div>
         </div>
     </div>

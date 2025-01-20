@@ -19,8 +19,30 @@ class WorkController extends Controller
         $truck = $user->truck;
         $catchments = Catchment::all();
 
+        $truck_jobs = [];
+        if($truck->job_1){
+            $truck_job = $jobs->find($truck->job_1);
+            array_push($truck_jobs, $truck_job);
+        }
+        if($truck->job_2){
+            $truck_job = $jobs->find($truck->job_2);
+            array_push($truck_jobs, $truck_job);
+        }
+        if($truck->job_3){
+            $truck_job = $jobs->find($truck->job_3);
+            array_push($truck_jobs, $truck_job);
+        }
+        if($truck->job_4){
+            $truck_job = $jobs->find($truck->job_4);
+            array_push($truck_jobs, $truck_job);
+        }
+        if($truck->job_5){
+            $truck_job = $jobs->find($truck->job_5);
+            array_push($truck_jobs, $truck_job);
+        }
 
-        return view('work/work', ['jobs' => $jobs, 'truck' => $truck, 'catchments' => $catchments]);
+
+        return view('work/work', ['jobs' => $jobs, 'truck' => $truck, 'catchments' => $catchments, 'truck_jobs' => $truck_jobs]);
     }
 
     public function pump(Request $request)
@@ -29,6 +51,11 @@ class WorkController extends Controller
 
         $truck = $user->truck;
         $truck->amount = $truck->amount + $request->amount;
+        if($truck->job_1 === null) $truck->job_1 = $request->job_id;
+        else if($truck->job_2 === null) $truck->job_2 = $request->job_id;
+        else if($truck->job_3 === null) $truck->job_3 = $request->job_id;
+        else if($truck->job_4 === null) $truck->job_4 = $request->job_id;
+        else if($truck->job_5 === null) $truck->job_5 = $request->job_id;
         $truck->save();
 
         $job = Job::find($request->job_id);
