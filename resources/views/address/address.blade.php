@@ -91,6 +91,17 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
+                            <label for="user.phone" class="form-control-label">Użytkownik</label>
+                            <div class="@error('user.phone')border border-danger rounded-3 @enderror">
+                                    <select name="user_id" id="address" class="form-control">
+                                            <option value=""></option>
+                                        @foreach($users as $user)
+                                            <option value="{{$user->id}}" @if($user->id === $address->user_id) selected @endif>{{$user->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="user.phone" class="form-control-label">Aglomeracja</label>
                                 <div class="@error('user.phone')border border-danger rounded-3 @enderror">

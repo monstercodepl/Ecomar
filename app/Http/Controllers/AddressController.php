@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Address;
 use App\Models\Zone;
 use App\Models\Municipality;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AddressController extends Controller
@@ -26,8 +27,9 @@ class AddressController extends Controller
     {
         $zones = Zone::all();
         $municipalities = Municipality::all();
+        $users = User::all();
         
-        return view('address/new-address', ['zones' => $zones, 'municipalities' => $municipalities]);
+        return view('address/new-address', ['zones' => $zones, 'municipalities' => $municipalities, 'users' => $users]);
     }
 
     /**
@@ -43,6 +45,7 @@ class AddressController extends Controller
         $address->aglomeracja = $request->has('aglomeracja');
         $address->zbiornik = $request->zbiornik;
         $address->zone_id = $request->zone_id;
+        $address->user_id = $request->user_id;
         $address->save();
 
         $addresses = Address::all();
@@ -58,8 +61,9 @@ class AddressController extends Controller
         $address = Address::find($id);
         $zones = Zone::all();
         $municipalities = Municipality::all();
+        $users = User::all();
 
-        return view('address/address', ['address' => $address, 'zones' => $zones, 'municipalities' => $municipalities]);
+        return view('address/address', ['address' => $address, 'zones' => $zones, 'municipalities' => $municipalities, 'users' => $users]);
     }
 
     /**
@@ -83,6 +87,7 @@ class AddressController extends Controller
         $address->aglomeracja = $request->has('aglomeracja');
         $address->zbiornik = $request->zbiornik;
         $address->zone_id = $request->zone_id;
+        $address->user_id = $request->user_id;
         $address->save();
 
         $addresses = Address::all();
