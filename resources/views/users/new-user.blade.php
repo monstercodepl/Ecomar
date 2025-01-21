@@ -53,21 +53,6 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="user.phone" class="form-control-label">Adres</label>
-                                <div class="@error('user.phone')border border-danger rounded-3 @enderror">
-                                    <select name="address" id="address" class="form-control">
-                                            <option value=""></option>
-                                        @foreach($addresses as $address)
-                                            <option value="{{$address->id}}">{{$address->adres}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
                                 <label for="user.phone" class="form-control-label">Numer NIP</label>
                                 <div class="@error('user.phone')border border-danger rounded-3 @enderror">
                                     <input class="form-control" type="text" placeholder="NIP" name="nip">

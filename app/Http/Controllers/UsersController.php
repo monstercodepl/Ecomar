@@ -31,7 +31,6 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
-        $user->address_id = $request->address;
         $user->nip = $request->nip;
         $user->save();
 
@@ -53,7 +52,6 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->password = bcrypt('1bnf7as9acsd6fgbvtea6');
-        $user->address_id = $request->address;
         $user->nip = $request->nip;
         $user->save();
         
