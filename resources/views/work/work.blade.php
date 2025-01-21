@@ -90,7 +90,7 @@
                     @foreach($truck_jobs as $truck_job)
                         <b>ID: </b>{{$truck_job->id}}</br>
                         <b>Klient: </b>{{$truck_job->user->name}}</br>
-                        <b>Adres: </b>{{$truck_job->address->adres}}</br>
+                        <b>Adres: </b>{{$truck_job->address->adres ?? 'brak'}}</br>
                         <b>Wypompowane: </b>{{$truck_job->pumped}}</br><br>
                     @endforeach   
                 </div>
@@ -167,15 +167,15 @@
                                         <td class="text-center">
                                         <form method="POST" action="work/pump">
                                         @csrf
-                                            <input type="hidden" name="job_id" value="{{$job->id}}">
-                                            Wypompowano:<br> <input type="number" name="amount"><br>
-                                            <input type="submit">
+                                            <input class="form-control" type="hidden" name="job_id" value="{{$job->id}}">
+                                            Wypompowano:<br> <input class="form-control mb-0" type="number" name="amount">
+                                            <input class="btn bg-gradient-light btn-md mt-3" type="submit">
                                         </form>
                                         <form method="POST" action="work/status">
                                             @csrf
                                             <input type="hidden" name="job_id" value="{{$job->id}}">
                                             <input type="hidden" name="status" value="pumped">
-                                            <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">Zakończ</button>
+                                            <button type="submit" class="btn bg-gradient-dark btn-md mb-1">Zakończ</button>
                                         </form>
                                         </td>
                                     </tr>
