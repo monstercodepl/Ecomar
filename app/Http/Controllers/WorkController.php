@@ -14,35 +14,37 @@ class WorkController extends Controller
     public function jobs()
     {
         // has to be filtered by driver
-        $jobs = Job::all();
+        $jobs = Job::where('status', 'Nowe')->get();
         $user = Auth::user();
         $truck = $user->truck;
         $catchments = Catchment::all();
 
+        $current_jobs = Job::where('status', 'pumped')->where('truck_id', $truck->id)->get();
+
         $truck_jobs = [];
         if($truck->job_1){
-            $truck_job = $jobs->find($truck->job_1);
+            $truck_job = Job::find($truck->job_1);
             array_push($truck_jobs, $truck_job);
         }
         if($truck->job_2){
-            $truck_job = $jobs->find($truck->job_2);
+            $truck_job = Job::find($truck->job_2);
             array_push($truck_jobs, $truck_job);
         }
         if($truck->job_3){
-            $truck_job = $jobs->find($truck->job_3);
+            $truck_job = Job::find($truck->job_3);
             array_push($truck_jobs, $truck_job);
         }
         if($truck->job_4){
-            $truck_job = $jobs->find($truck->job_4);
+            $truck_job = Job::find($truck->job_4);
             array_push($truck_jobs, $truck_job);
         }
         if($truck->job_5){
-            $truck_job = $jobs->find($truck->job_5);
+            $truck_job = Job::find($truck->job_5);
             array_push($truck_jobs, $truck_job);
         }
 
 
-        return view('work/work', ['jobs' => $jobs, 'truck' => $truck, 'catchments' => $catchments, 'truck_jobs' => $truck_jobs]);
+        return view('work/work', ['jobs' => $jobs, 'truck' => $truck, 'catchments' => $catchments, 'truck_jobs' => $truck_jobs, 'current_jobs' => $current_jobs]);
     }
 
     public function pump(Request $request)
@@ -60,6 +62,8 @@ class WorkController extends Controller
 
         $job = Job::find($request->job_id);
         $job->pumped = $job->pumped + $request->amount;
+        $job->status = 'pumped';
+        $job->truck_id = $truck->id;
         $job->save();
 
         $work = new Work;
@@ -86,7 +90,46 @@ class WorkController extends Controller
         $work->save();
 
         $truck = $user->truck;
-        $truck->amount = $truck->amount - $request->amount;
+
+        $truck_jobs = [];
+        if($truck->job_1){
+            $truck_job = Job::find($truck->job_1);
+            array_push($truck_jobs, $truck_job);
+        }
+        if($truck->job_2){
+            $truck_job = Job::find($truck->job_2);
+            array_push($truck_jobs, $truck_job);
+        }
+        if($truck->job_3){
+            $truck_job = Job::find($truck->job_3);
+            array_push($truck_jobs, $truck_job);
+        }
+        if($truck->job_4){
+            $truck_job = Job::find($truck->job_4);
+            array_push($truck_jobs, $truck_job);
+        }
+        if($truck->job_5){
+            $truck_job = Job::find($truck->job_5);
+            array_push($truck_jobs, $truck_job);
+        }
+
+        $difference = $truck->amount - $request->amount;
+        $difference_part = $difference / $truck->amount;
+
+        foreach($truck_jobs as $truck_job)
+        {
+            $truck_job->corrected = $truck_job->pumped - $truck_job->pumped * $difference_part;
+            $truck_job->status = 'done';
+            $truck_job->catchment_id = $request->catchment_id;
+            $truck_job->save();
+        }
+
+        $truck->amount = 0;
+        $truck->job_1 = null;
+        $truck->job_2 = null;
+        $truck->job_3 = null;
+        $truck->job_4 = null;
+        $truck->job_5 = null;
         $truck->save();
 
         return redirect('work');
