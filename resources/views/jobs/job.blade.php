@@ -41,7 +41,7 @@
                                 <label for="user.phone" class="form-control-label">Adres</label>
                                 <div class="@error('user.phone')border border-danger rounded-3 @enderror">
                                     <select name="address" id="address" class="form-control" disabled>
-                                            <option value="{{$job->address->id}}">{{$job->address->adres}}</option>
+                                            <option value="{{$job->address->id}}">{{$job->address->adres}} {{$job->address->numer}}, {{$job->address->miasto}}</option>
                                     </select>
                                 </div>
                             </div>

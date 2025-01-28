@@ -32,7 +32,7 @@
                                     <select name="address" id="address" class="form-control">
                                             <option value=""></option>
                                         @foreach($addresses as $address)
-                                            <option value="{{$address->id}}">{{$address->adres}} {{$address->numer}}</option>
+                                            <option value="{{$address->id}}">{{$address->adres}} {{$address->numer}}, {{$address->miasto}}</option>
                                         @endforeach
                                     </select>
                                 </div>
