@@ -36,8 +36,9 @@ class JobController extends Controller
     {
         $addresses = Address::all();
         $users = User::all();
+        $drivers = User::whereNotNull('truck_id')->get();
 
-        return view('jobs/new-job', ['addresses' => $addresses, 'users' => $users]);
+        return view('jobs/new-job', ['addresses' => $addresses, 'users' => $users, 'drivers' => $drivers]);
     }
 
     /**
@@ -50,6 +51,7 @@ class JobController extends Controller
         $job->address_id = $request->address;
         $job->status = 'Nowe';
         $job->schedule = $request->date;
+        $job->driver_id = $request->driver;
         $job->save();
 
         $jobs = Job::all();
