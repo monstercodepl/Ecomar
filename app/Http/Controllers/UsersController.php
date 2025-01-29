@@ -30,6 +30,7 @@ class UsersController extends Controller
         $user = User::find($request->id);
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->secondary_email = $request->secondary_email;
         $user->phone = $request->phone;
         $user->nip = $request->nip;
         $user->save();
@@ -50,6 +51,7 @@ class UsersController extends Controller
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->secondary_email = $request->secondary_email;
         $user->phone = $request->phone;
         $user->password = bcrypt('1bnf7as9acsd6fgbvtea6');
         $user->nip = $request->nip;

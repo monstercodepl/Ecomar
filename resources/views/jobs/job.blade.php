@@ -26,21 +26,11 @@
                     @method('POST')
                     <input type="hidden" name="id" value="{{$job->id}}">
                     <div class="row">
-                    <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="user.phone" class="form-control-label">Klient</label>
-                                <div class="@error('user.phone')border border-danger rounded-3 @enderror">
-                                    <select name="user" id="address" class="form-control" disabled>
-                                            <option value="{{$job->user->id}}">{{$job->user->name}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="user.phone" class="form-control-label">Adres</label>
                                 <div class="@error('user.phone')border border-danger rounded-3 @enderror">
-                                    <select name="address" id="address" class="form-control" disabled>
+                                    <select name="address" id="job_2" class="form-control" disabled>
                                             <option value="{{$job->address->id}}">{{$job->address->adres}} {{$job->address->numer}}, {{$job->address->miasto}}</option>
                                     </select>
                                 </div>

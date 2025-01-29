@@ -47,7 +47,7 @@
                             <div class="form-group">
                                 <label for="user.phone" class="form-control-label">Gmina</label>
                                 <div class="@error('user.phone')border border-danger rounded-3 @enderror">
-                                    <select name="municipality" id="address" class="form-control">
+                                    <select name="municipality" id="select-3" data-select2-id="select-3" class="form-control select-2">
                                         <option value=""></option>
                                         @foreach($municipalities as $municipality)
                                             <option @if($municipality->id == ($address->municipality->id ?? '')) selected @endif value="{{$municipality->id}}">{{$municipality->name}}</option>
@@ -70,7 +70,7 @@
                             <div class="form-group">
                                 <label for="user.phone" class="form-control-label">Zbiornik</label>
                                 <div class="@error('user.phone')border border-danger rounded-3 @enderror">
-                                    <input class="form-control" type="number" placeholder="8" id="number" name="zbiornik">
+                                    <input class="form-control" type="number" placeholder="8" id="number" step="0.5" name="zbiornik">
                                 </div>
                             </div>
                         </div>
@@ -78,7 +78,7 @@
                             <div class="form-group">
                                 <label for="user.phone" class="form-control-label">Strefa</label>
                                 <div class="@error('user.phone')border border-danger rounded-3 @enderror">
-                                    <select name="zone_id" id="address" class="form-control">
+                                    <select name="zone_id" id="selec1-1" data-select2-id="select-1" class="form-control select-2">
                                             <option value=""></option>
                                         @foreach($zones as $zone)
                                             <option value="{{$zone->id}}">{{$zone->name}}</option>
@@ -92,7 +92,7 @@
                         <div class="col-md-6">
                             <label for="user.phone" class="form-control-label">Użytkownik</label>
                             <div class="@error('user.phone')border border-danger rounded-3 @enderror">
-                                    <select name="user_id" id="address" class="form-control">
+                                    <select name="user_id" id="selec1-2" data-select2-id="select-2" class="form-control select-2">
                                             <option value=""></option>
                                         @foreach($users as $user)
                                             <option value="{{$user->id}}">{{$user->name}}</option>

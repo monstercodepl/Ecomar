@@ -61,6 +61,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="user-email" class="form-control-label">Adres email do kontaktu</label>
+                                <div class="@error('email')border border-danger rounded-3 @enderror">
+                                    <input class="form-control" type="email" placeholder="" id="user-email" name="secondary_email" value="{{$user->secondary_email}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">Zapisz zmiany</button>
                     </div>

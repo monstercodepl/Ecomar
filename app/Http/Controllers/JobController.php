@@ -47,7 +47,6 @@ class JobController extends Controller
     public function store(Request $request)
     {
         $job = new Job;
-        $job->user_id = $request->user;
         $job->address_id = $request->address;
         $job->status = 'Nowe';
         $job->schedule = $request->date;
