@@ -89,7 +89,7 @@
                     <div class="col-6">
                     @foreach($truck_jobs as $truck_job)
                         <b>ID: </b>{{$truck_job->id}}</br>
-                        <b>Klient: </b>{{$truck_job->user->name}}</br>
+                        <b>Klient: </b>{{$truck_job->address->user->name}}</br>
                         <b>Adres: </b>{{$truck_job->address->adres ?? 'brak'}}</br>
                         <b>Wypompowane: </b>{{$truck_job->pumped}}</br><br>
                     @endforeach   
@@ -147,7 +147,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{$job->address->adres ?? ''}} {{$job->address->numer ?? 'brak'}}</p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$job->user->name ?? 'brak'}}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->user->name ?? 'brak'}}</p>
                                         </td>
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">{{$job->schedule}}</p>

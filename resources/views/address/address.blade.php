@@ -105,7 +105,7 @@
                             <div class="form-group">
                                 <label for="user.phone" class="form-control-label">Aglomeracja</label>
                                 <div class="@error('user.phone')border border-danger rounded-3 @enderror">
-                                    <input class="" type="checkbox" id="number" name="aglomeracja" @if($address->aglomeracja) checked @endif>
+                                    <input class="" type="checkbox" id="number" name="aglomeracja" @if($user->aglomeracja) checked @endif>
                                 </div>
                             </div>
                         </div>

@@ -6,8 +6,10 @@ use App\Models\Work;
 use App\Models\Job;
 use App\Models\Truck;
 use App\Models\Catchment;
+use App\Mail\JobFinished;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class WorkController extends Controller
 {
@@ -73,7 +75,19 @@ class WorkController extends Controller
         $work->truck_id = $truck->id;
         $work->save();
 
+        $client = $job->address->user;
 
+        $email = $client->email;
+
+        if($client->secondary_email) {
+            $email = $client->secondary_email;
+        }
+
+        if($client->default_email) {
+            $email = 'wz_ecomar@op.pl';
+        }
+
+        Mail::to('jakub.zacios@gmail.com')->send(new JobFinished($job));
 
         return redirect('work');
     }

@@ -69,6 +69,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="user-email" class="form-control-label">Domyślny adres</label>
+                                <div class="@error('email')border border-danger rounded-3 @enderror">
+                                    <input class="" type="checkbox" id="number" name="default_email">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">Zapisz</button>
