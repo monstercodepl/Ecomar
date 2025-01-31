@@ -37,6 +37,10 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Address::where('numer', $request->numer)->where('adres', $request->ulica)->where('miasto', $request->miasto)->get()->isEmpty()) {
+            return redirect('addresses');
+        }
+
         $address = new Address;
         $address->numer = $request->numer;
         $address->adres = $request->ulica;

@@ -33,6 +33,11 @@
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> 
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>  
 
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.css" />
+  
+  <script src="https://cdn.datatables.net/2.2.1/js/dataTables.js"></script> 
+
+
 </head>
 
 <body class="g-sidenav-show  bg-gray-100 {{ (\Request::is('rtl') ? 'rtl' : (Request::is('virtual-reality') ? 'virtual-reality' : '')) }} ">
@@ -79,6 +84,9 @@
       $('.select-2').select2();
     });
 
+    $(document).ready( function () {
+      $('#dataTable').DataTable();
+    } );
   </script>
   
 </body>
