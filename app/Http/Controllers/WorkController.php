@@ -93,7 +93,7 @@ class WorkController extends Controller
         $message = new JobFinished($job);
         $message->attachData($pdf->output(), "wz.pdf");
 
-        Mail::to('jakub.zacios@gmail.com')->send($message);
+        Mail::to($email)->send($message);
 
         return redirect('work');
     }
