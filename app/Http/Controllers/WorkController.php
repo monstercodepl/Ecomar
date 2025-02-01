@@ -10,6 +10,8 @@ use App\Mail\JobFinished;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class WorkController extends Controller
 {
@@ -87,7 +89,11 @@ class WorkController extends Controller
             $email = 'wz_ecomar@op.pl';
         }
 
-        Mail::to('jakub.zacios@gmail.com')->send(new JobFinished($job));
+        $pdf = PDF::loadView('mail.job.finished', ['job' => $job]);
+        $message = new JobFinished($job);
+        $message->attachData($pdf->output(), "wz.pdf");
+
+        Mail::to('jakub.zacios@gmail.com')->send($message);
 
         return redirect('work');
     }
