@@ -27,7 +27,7 @@ class JobFinished extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('noreply@eco-mar.pl', 'Eco-Mar'),
+            from: new Address('wz@u356090.stronazen.pl', 'Eco-Mar'),
             subject: 'Zakończono zlecenie',
         );
     }
