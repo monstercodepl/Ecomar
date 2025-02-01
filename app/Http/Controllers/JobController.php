@@ -20,6 +20,20 @@ class JobController extends Controller
         return view('jobs/jobs', ['jobs' => $jobs]);
     }
 
+    public function daily()
+    {
+        $drivers = User::whereNotNull('truck_id')->get();
+
+        return view('jobs/daily', ['drivers' => $drivers]);
+    }
+
+    public function generate(Request $request)
+    {
+        $jobs = Job::where('driver_id', $request->driver_id)->whereRaw('date(schedule) =?', date($request->date))->get();
+
+        return view('/jobs/report', ['jobs' => $jobs]);
+    }
+
     public function index_client()
     {
         $user = Auth::user();

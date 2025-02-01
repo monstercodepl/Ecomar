@@ -100,6 +100,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/work/dump', [WorkController::class, 'dump']);
 	Route::post('/work/status', [WorkController::class, 'status']);
 
+	Route::get('/daily_report', [JobController::class, 'daily'])->name('daily_report');
+	Route::post('/generate_report', [JobController::class, 'generate'])->name('generate_report');
+
 	Route::get('/sms', function () {
 		return view('/sms/settings');
 	});
