@@ -28,7 +28,8 @@
               {
                 title: "{{$job->address->adres ?? ''}} {{$job->address->numer ?? 'brak'}}, {{$job->address->miasto ?? 'brak'}}",
                 start: '{{$job->schedule}}',
-                end: '{{$job->schedule}}'
+                end: '{{$job->schedule}}',
+                url: '/job/{{$job->id}}'
               },
             @endforeach
           ]

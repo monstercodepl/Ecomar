@@ -13,7 +13,7 @@ table, th, td {
             <th>Miejscowosc</th>
             <th>Wielkosc zbiornika</th>
             <th>Wywiezione m3</th>
-            <th>Kwota do zaplaty</th>
+            <th  style="padding-left: 20px; padding-right: 20px;">Zlewnia</th>
             <th>Zaplacono</th>
         </tr>
     </thead>

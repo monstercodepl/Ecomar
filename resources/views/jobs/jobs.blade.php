@@ -46,7 +46,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{$job->id}}</p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->adres ?? ''}} {{$job->address->numer ?? 'brak'}}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->adres ?? ''}} {{$job->address->numer ?? 'brak'}} {{$job->address->miasto ?? ''}}</p>
                                         </td>
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">{{$job->user->name ?? 'brak'}}</p>

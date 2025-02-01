@@ -36,6 +36,19 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="user.phone" class="form-control-label">Kierowca</label>
+                                <div class="@error('user.phone')border border-danger rounded-3 @enderror">
+                                    <select name="driver" id="new_job_2" class="form-control select-2">
+                                            <option value=""></option>
+                                        @foreach($drivers as $driver)
+                                            <option value="{{$driver->id}}" @if($job->driver_id == $driver->id) selected @endif>{{$driver->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">

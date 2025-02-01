@@ -82,8 +82,9 @@ class JobController extends Controller
     public function show($id)
     {
         $job = Job::find($id);
-        
-        return view('jobs/job', ['job' => $job]);
+        $drivers = User::whereNotNull('truck_id')->get();
+
+        return view('jobs/job', ['job' => $job, 'drivers' => $drivers]);
     }
 
     /**
@@ -101,6 +102,7 @@ class JobController extends Controller
     {
         $job = Job::find($request->id);
         $job->schedule = $request->date;
+        $job->driver_id = $request->driver;
         $job->save();
 
         return redirect('jobs');
