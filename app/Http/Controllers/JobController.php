@@ -29,7 +29,11 @@ class JobController extends Controller
 
     public function generate(Request $request)
     {
-        $jobs = Job::where('driver_id', $request->driver_id)->whereRaw('date(schedule) =?', date($request->date))->get();
+        if($request->driver_id == ''){
+            $jobs = Job::whereRaw('date(schedule) =?', date($request->date))->get();
+        }else{
+            $jobs = Job::where('driver_id', $request->driver_id)->whereRaw('date(schedule) =?', date($request->date))->get();
+        }
 
         return view('/jobs/report', ['jobs' => $jobs]);
     }
