@@ -11,6 +11,7 @@
           locale: 'pl',
           firstDay: '1',
           initialView: 'dayGridMonth',
+          slotEventOverlap: false,
           displayEventTime: false,
           headerToolbar: {
             left: 'prev,next',
