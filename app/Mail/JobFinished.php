@@ -19,7 +19,9 @@ class JobFinished extends Mailable
      * Create a new message instance.
      */
     public function __construct( public Job $job)
-    {}
+    {
+        $this->subject = $job->address->adres ?? ''. ' ' . $job->address->numer ?? ''. ' , ' . $job->address->miasto ?? '';
+    }
 
     /**
      * Get the message envelope.
@@ -28,7 +30,7 @@ class JobFinished extends Mailable
     {
         return new Envelope(
             from: new Address('wz@u356090.stronazen.pl', 'Eco-Mar'),
-            subject: 'Zakończono zlecenie',
+            subject: 'WZ: ' . $this->subject,
         );
     }
 

@@ -70,6 +70,8 @@ class WorkController extends Controller
         $job->truck_id = $truck->id;
         $job->save();
 
+        $job->price = $job->pumped * $job->address->zone->price;
+
         $work = new Work;
         $work->job_id = $request->job_id;
         $work->amount = $request->amount;
@@ -89,7 +91,7 @@ class WorkController extends Controller
             $email = 'wz_ecomar@op.pl';
         }
 
-        $pdf = PDF::loadView('mail.job.finished', ['job' => $job]);
+        $pdf = PDF::loadView('mail.job.finished_pdf', ['job' => $job]);
         $message = new JobFinished($job);
         $message->attachData($pdf->output(), "wz.pdf");
 
