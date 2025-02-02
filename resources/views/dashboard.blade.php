@@ -10,8 +10,11 @@
         var calendar = new FullCalendar.Calendar(calendarEl, {
           locale: 'pl',
           firstDay: '1',
-          initialView: 'dayGridMonth',
+          initialView: 'timeGridWeek',
           slotEventOverlap: false,
+          eventOrder: "start,-duration,title",
+          allDaySlot: false,
+          height: 'auto', 
           displayEventTime: false,
           headerToolbar: {
             left: 'prev,next',
