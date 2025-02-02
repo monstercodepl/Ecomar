@@ -24,7 +24,8 @@ body{font-family: "DejaVu Sans", sans-serif;}
  </div>
  <div style="width: 488px; text-align: center; border: 1px solid black";>
    <p>nazwa usługi: USŁUGA ASENIZACYJNA </p>
-   <p>wartość: {{$job->price}}</p>
+   <p>wartość: {{$job->price}} zł</p>
+   <p>wypompowano: {{$job->pumped}} m3</p>
    <p>forma płatności: przelew</p>
 
 <p>Przelew proszę dokonać na nr rach.: 62 1090 1450 0000 0001 2603 4343 termin płatności przelewem wynosi 7 dni. <br>

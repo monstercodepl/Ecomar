@@ -71,6 +71,7 @@ class WorkController extends Controller
         $job->save();
 
         $job->price = $job->pumped * $job->address->zone->price;
+        $job->save();
 
         $work = new Work;
         $work->job_id = $request->job_id;
