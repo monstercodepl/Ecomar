@@ -19,14 +19,14 @@
                 <div class="card-body">
                   <form role="form" method="POST" action="/session">
                     @csrf
-                    <label>Email</label>
+                    <label>Adres e0mail</label>
                     <div class="mb-3">
-                      <input type="email" class="form-control" name="email" id="email" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
+                      <input type="email" class="form-control" name="email" id="email" placeholder="Adres e-mail" aria-label="Email" aria-describedby="email-addon">
                       @error('email')
                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                       @enderror
                     </div>
-                    <label>Password</label>
+                    <label>Hasło</label>
                     <div class="mb-3">
                       <input type="password" class="form-control" name="password" id="password" placeholder="Hasło" value="secret" aria-label="Hasło" aria-describedby="password-addon">
                       @error('password')
