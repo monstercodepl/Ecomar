@@ -20,7 +20,7 @@ class JobFinished extends Mailable
      */
     public function __construct( public Job $job)
     {
-        $this->subject = $job->address->adres ?? ''. ' ' . $job->address->numer ?? ''. ' , ' . $job->address->miasto ?? '';
+        $this->subject = ($job->address->adres ?? '').' '.($job->address->numer ?? '').' , '.($job->address->miasto ?? '');
     }
 
     /**
