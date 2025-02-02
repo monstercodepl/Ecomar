@@ -43,6 +43,11 @@
       });
 
     </script>
+    <style>
+      .fc-timegrid-event {
+  width: 100% !important; 
+  left: 0 !important;
+}</style>
 
   <div class="row">
     <div id="calendar"></div>
