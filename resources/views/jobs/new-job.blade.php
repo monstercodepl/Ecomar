@@ -62,6 +62,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="user.phone" class="form-control-label">Komentarz</label>
+                                <div class="@error('user.phone')border border-danger rounded-3 @enderror">
+                                    <textarea class="form-control" type="datetime-local"  id="number" name="comment"></textarea>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">Zapisz</button>

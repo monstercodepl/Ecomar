@@ -69,6 +69,7 @@ class JobController extends Controller
         $job->status = 'Nowe';
         $job->schedule = $request->date;
         $job->driver_id = $request->driver;
+        $job->comment = $request->comment;
         $job->save();
 
         $jobs = Job::all();
@@ -103,6 +104,7 @@ class JobController extends Controller
         $job = Job::find($request->id);
         $job->schedule = $request->date;
         $job->driver_id = $request->driver;
+        $job->comment = $request->comment;
         $job->save();
 
         return redirect('jobs');
