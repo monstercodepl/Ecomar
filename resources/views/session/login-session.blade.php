@@ -21,14 +21,15 @@
                     @csrf
                     <label>Adres e-mail</label>
                     <div class="mb-3">
-                      <input type="email" class="form-control" name="email" id="email" placeholder="Adres e-mail" aria-label="Email" aria-describedby="email-addon">
+                    <input type="email" name="email" id="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
                       @error('email')
                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                       @enderror
                     </div>
                     <label>Hasło</label>
                     <div class="mb-3">
-                      <input type="password" class="form-control" name="password" id="password" placeholder="Hasło" value="secret" aria-label="Hasło" aria-describedby="password-addon">
+                    <input type="email" name="password" id="password" class="form-control" placeholder="Hasło" aria-label="Password" aria-describedby="password-addon">
+                    
                       @error('password')
                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                       @enderror
