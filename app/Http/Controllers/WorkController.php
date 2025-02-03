@@ -84,19 +84,21 @@ class WorkController extends Controller
 
         $email = $client->email;
 
-        if($client->secondary_email) {
-            $email = $client->secondary_email;
+        if(is_null($client->nip)){
+            if($client->secondary_email) {
+                $email = $client->secondary_email;
+            }
+
+            if($client->default_email) {
+                $email = 'wz_ecomar@op.pl';
+            }
+
+            $pdf = PDF::loadView('mail.job.finished_pdf', ['job' => $job]);
+            $message = new JobFinished($job);
+            $message->attachData($pdf->output(), "wz.pdf");
+
+            Mail::to($email)->send($message);
         }
-
-        if($client->default_email) {
-            $email = 'wz_ecomar@op.pl';
-        }
-
-        $pdf = PDF::loadView('mail.job.finished_pdf', ['job' => $job]);
-        $message = new JobFinished($job);
-        $message->attachData($pdf->output(), "wz.pdf");
-
-        Mail::to($email)->send($message);
 
         return redirect('work');
     }

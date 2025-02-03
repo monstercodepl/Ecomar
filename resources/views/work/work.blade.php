@@ -238,12 +238,6 @@
                                             Wypompowano:<br> <input class="form-control mb-0" type="number" name="amount">
                                             <input class="btn bg-gradient-light btn-md mt-3" type="submit">
                                         </form>
-                                        <form method="POST" action="work/status">
-                                            @csrf
-                                            <input type="hidden" name="job_id" value="{{$job->id}}">
-                                            <input type="hidden" name="status" value="pumped">
-                                            <button type="submit" class="btn bg-gradient-dark btn-md mb-1">Zakończ</button>
-                                        </form>
                                         </td>
                                     </tr>
                                 @endforeach
