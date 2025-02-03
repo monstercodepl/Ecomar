@@ -28,7 +28,7 @@
                     </div>
                     <label>Hasło</label>
                     <div class="mb-3">
-                    <input type="email" name="password" id="password" class="form-control" placeholder="Hasło" aria-label="Password" aria-describedby="password-addon">
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Hasło" aria-label="Password" aria-describedby="password-addon">
                     
                       @error('password')
                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
