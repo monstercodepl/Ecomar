@@ -29,7 +29,7 @@ class JobFinished extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('wz@u356090.stronazen.pl', 'Eco-Mar'),
+            from: new Address('noreply@przedszkolnik.com', 'Eco-Mar'),
             subject: 'WZ: ' . $this->subject,
         );
     }
