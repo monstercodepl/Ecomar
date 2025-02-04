@@ -16,7 +16,7 @@ body{font-family: "DejaVu Sans", sans-serif;}
  <div style="width: 300px; float: left; text-align: center;"> 
    <h3>WYDANIE ZEWNĘTRZNE</h3>
    <p>Dnia {{$job->updated_at}}</p>
-   <p>Numer {{$job->id}}</p>
+   <p>Numer {{$id}}</p>
  </div>
  <div style="width: 500px; clear: both; padding-top: 10px; padding-bottom: 10px;">
    Odbiorca: {{$job->address->user->name ?? ''}}<br>

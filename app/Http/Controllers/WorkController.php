@@ -7,10 +7,12 @@ use App\Models\Job;
 use App\Models\Truck;
 use App\Models\Catchment;
 use App\Mail\JobFinished;
+use App\Models\Wz;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Carbon;
 
 
 class WorkController extends Controller
@@ -93,7 +95,24 @@ class WorkController extends Controller
                 $email = 'wz_ecomar@op.pl';
             }
 
-            $pdf = PDF::loadView('mail.job.finished_pdf', ['job' => $job]);
+            $letter = $user->letter;
+            $month = Carbon::now()->format('mm');
+            $year = Carbon::now()->format('Y');
+
+            $wzs = Wz::where('letter', $letter)->where('month', $month)->where('year', $year)->get()->count();
+            $number = $wzs + 1;
+
+            $wzId = $letter.$number.'/'.$month.'/'.$year;
+
+            $wz = new Wz;
+            $wz->number = $number;
+            $wz->month = $month;
+            $wz->year = $year;
+            $wz->letter = $letter;
+            $wz->job_id = $job->id;
+            $wz->save();
+
+            $pdf = PDF::loadView('mail.job.finished_pdf', ['job' => $job, 'id' => $wzId]);
             $message = new JobFinished($job);
             $message->attachData($pdf->output(), "wz.pdf");
 
