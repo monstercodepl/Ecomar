@@ -96,7 +96,7 @@ class WorkController extends Controller
             }
 
             $letter = $user->letter;
-            $month = Carbon::now()->format('mm');
+            $month = Carbon::now()->format('m');
             $year = Carbon::now()->format('Y');
 
             $wzs = Wz::where('letter', $letter)->where('month', $month)->where('year', $year)->get()->count();
