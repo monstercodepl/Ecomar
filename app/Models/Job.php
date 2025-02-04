@@ -19,4 +19,9 @@ class Job extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function driver(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'driver_id');
+    }
 }
