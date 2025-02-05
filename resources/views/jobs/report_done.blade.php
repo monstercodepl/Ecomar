@@ -6,29 +6,26 @@ table, th, td {
 </style>
 <body>
 <table>
+    Data: {{$date}}
     <thead>
         <tr>
-            <th>ID</th>
+            <th>WZ</th>
             <th>Ulica</th>
             <th>Miejscowosc</th>
             <th>Wywiezione m3</th>
-            <th>Wywiezione (korekta)</th>
-            <th>Zlewnia</th>
-            <th>Kierowca</th>
-            <th>Zaplacono</th>
+            <th>Kwota</th>
+            <th>Rodzaj płatności</th>
         </tr>
     </thead>
     <tbody>
         @foreach($jobs as $job)
             <tr>
-                <th>{{$job->id}}</th>
+                <th>@if($job->wz){{($job->wz->letter ?? '').($job->wz->number ?? '').'/'.($job->wz->month ?? '').'/'.($job->wz->year ?? '')}}@endif</th>
                 <th>{{$job->address->adres ?? ''}} {{$job->address->numer ?? ''}}</th>
                 <th>{{$job->address->miasto ?? ''}}</th>
                 <th>{{$job->pumped ?? ''}}</th>
-                <th>{{$job->corrected}}</th>
-                <th>{{$job->catchment->name ?? ''}}</th>
-                <th>{{$job->driver->name ?? ''}}</th>
-                <th></th>
+                <th>{{$job->price ?? ''}}</th>
+                <th>@if($job->cash)Gotówka @else Przelew @endif</th>
             </tr>
         @endforeach
     </tbody>

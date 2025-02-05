@@ -35,7 +35,7 @@ class JobController extends Controller
             $jobs = Job::where('driver_id', $request->driver_id)->whereRaw('date(schedule) =?', date($request->date))->get();
         }
 
-        return view('/jobs/report', ['jobs' => $jobs]);
+        return view('/jobs/report', ['jobs' => $jobs, 'date' => $request->date]);
     }
 
     public function done_report()
@@ -53,7 +53,7 @@ class JobController extends Controller
             $jobs = Job::where('driver_id', $request->driver_id)->whereRaw('date(schedule) =?', date($request->date))->get();
         }
 
-        return view('/jobs/report_done', ['jobs' => $jobs]);
+        return view('/jobs/report_done', ['jobs' => $jobs, 'date' => $request->date]);
     }
 
     public function index_client()

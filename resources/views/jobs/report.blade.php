@@ -6,6 +6,7 @@ table, th, td {
 </style>
 <body>
 <table>
+    Data: {{$date}}
     <thead>
         <tr>
             <th>ID</th>

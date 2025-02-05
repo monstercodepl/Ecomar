@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Job extends Model
 {
@@ -28,5 +29,10 @@ class Job extends Model
     public function catchment(): BelongsTo
     {
         return $this->belongsTo(Catchment::class);
+    }
+
+    public function wz(): HasOne
+    {
+        return $this->hasOne(Wz::class)->latestOfMany();
     }
 }
