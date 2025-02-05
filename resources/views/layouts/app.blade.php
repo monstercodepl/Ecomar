@@ -84,9 +84,35 @@
       $('.select-2').select2();
     });
 
-    $(document).ready( function () {
-      $('#dataTable').DataTable();
-    } );
+    $(document).ready(function () {
+  $('#dataTable').DataTable({
+    language: {
+      "decimal": "",
+      "emptyTable": "Brak danych w tabeli",
+      "info": "Wyświetlono od _START_ do _END_ z _TOTAL_ wpisów",
+      "infoEmpty": "Wyświetlono 0 z 0 wpisów",
+      "infoFiltered": "(przefiltrowano z _MAX_ wszystkich wpisów)",
+      "infoPostFix": "",
+      "thousands": ",",
+      "lengthMenu": "Pokaż _MENU_ wpisów",
+      "loadingRecords": "Wczytywanie...",
+      "processing": "Przetwarzanie...",
+      "search": "Szukaj:",
+      "zeroRecords": "Nie znaleziono pasujących wpisów",
+      "paginate": {
+        "first": "Pierwsza",
+        "last": "Ostatnia",
+        "next": "Następna",
+        "previous": "Poprzednia"
+      },
+      "aria": {
+        "orderable": "Sortuj według tej kolumny",
+        "orderableReverse": "Odwróć kolejność sortowania tej kolumny"
+      }
+    }
+  });
+});
+
   </script>
   
 </body>
