@@ -70,6 +70,7 @@ class WorkController extends Controller
         $job->pumped = $job->pumped + $request->amount;
         $job->status = 'pumped';
         $job->truck_id = $truck->id;
+        $job->cash = $request->has('cash');
         $job->save();
 
         $job->price = $job->pumped * $job->address->zone->price;

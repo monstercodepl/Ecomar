@@ -235,7 +235,8 @@
                                         <form method="POST" action="work/pump">
                                         @csrf
                                             <input class="form-control" type="hidden" name="job_id" value="{{$job->id}}">
-                                            Wypompowano:<br> <input class="form-control mb-0" type="text" step="0.5" min="0" name="amount">
+                                            Wypompowano:<br> <input class="form-control mb-0" type="text" step="0.5" min="0" name="amount"><br>
+                                            Zapłacono gotówką <input class=" mt-2" type="checkbox" name="cash"><br>
                                             <input class="btn bg-gradient-light btn-md mt-3" type="submit">
                                         </form>
                                         </td>

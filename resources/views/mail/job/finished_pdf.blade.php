@@ -26,11 +26,11 @@ body{font-family: "DejaVu Sans", sans-serif;}
    <p>nazwa usługi: USŁUGA ASENIZACYJNA </p>
    <p>wartość: {{$job->price}} zł</p>
    <p>wypompowano: {{$job->pumped}} m3</p>
-   <p>forma płatności: przelew</p>
+   <p>forma płatności: @if($job->cash)zapłacono gotówką @else przelew @endif</p>
 
-<p>Przelew proszę dokonać na nr rach.: 62 1090 1450 0000 0001 2603 4343 termin płatności przelewem wynosi 7 dni. <br>
+@if(!$job->cash)<p>Przelew proszę dokonać na nr rach.: 62 1090 1450 0000 0001 2603 4343 termin płatności przelewem wynosi 7 dni. <br>
  <b> tytułem: numer dokumentu / adres usługi / data usługi
-</p>
+</p>@endif
  </div>
 </div>
 </body>
