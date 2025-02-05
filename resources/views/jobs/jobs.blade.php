@@ -52,7 +52,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{$job->id}}</p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->adres ?? ''}} {{$job->address->numer ?? 'brak'}} {{$job->address->miasto ?? ''}}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->adres ?? ''}} {{$job->address->numer ?? 'brak'}}, {{$job->address->miasto ?? ''}}</p>
                                         </td>
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">{{$job->address->user->name ?? 'brak'}} {{$job->address->user->email ?? 'brak'}}</p>
@@ -61,7 +61,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{$job->driver->name ?? ''}}</p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$job->schedule}}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ substr($job->schedule, 0, 10) }}                                            </p>
                                         </td>
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">@if($job->wz){{($job->wz->letter ?? '').($job->wz->number ?? '').'/'.($job->wz->month ?? '').'/'.($job->wz->year ?? '')}}@endif</p>
