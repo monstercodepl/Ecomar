@@ -103,6 +103,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/daily_report', [JobController::class, 'daily'])->name('daily_report');
 	Route::post('/generate_report', [JobController::class, 'generate'])->name('generate_report');
 
+	Route::get('/done_report', [JobController::class, 'done_report'])->name('done_report');
+	Route::post('/generate_done_report', [JobController:: class, 'generate_done_report'])->name('geenerate_done_reprot');
+
 	Route::get('/sms', function () {
 		return view('/sms/settings');
 	});
