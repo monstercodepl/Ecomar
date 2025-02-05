@@ -26,7 +26,7 @@ table, th, td {
                 <th>{{$job->address->adres ?? ''}} {{$job->address->numer ?? ''}}</th>
                 <th>{{$job->address->miasto ?? ''}}</th>
                 <th>{{$job->pumped ?? ''}}</th>
-                <th>@if(!$job->user->nip){{$job->price ?? ''}}@endif</th>
+                <th>@if(!$job->address->user->nip){{$job->price ?? ''}}@endif</th>
                 <th>@if($job->cash)Gotówka @else Przelew @endif</th>
             </tr>
         @endforeach
