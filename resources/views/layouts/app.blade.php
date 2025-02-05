@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 
-@if (\Request::is('rtl'))
-  <html dir="rtl" lang="ar">
-@else
   <html lang="pl" >
-@endif
+
 
 <head>
   <meta charset="utf-8" />
@@ -36,8 +33,13 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.css" />
   
   <script src="https://cdn.datatables.net/2.2.1/js/dataTables.js"></script> 
-
-
+  
+  <script src="https://kit.fontawesome.com/40654e9cba.js" crossorigin="anonymous"></script>
+<style>
+  .icon-shape i {
+color: #000 !important;
+}
+</style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100 {{ (\Request::is('rtl') ? 'rtl' : (Request::is('virtual-reality') ? 'virtual-reality' : '')) }} ">
