@@ -35,6 +35,9 @@
                                         Data
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        WZ
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Status
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -60,6 +63,10 @@
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">{{$job->schedule}}</p>
                                         </td>
+                                        <td class="text-center">
+                                            <p class="text-xs font-weight-bold mb-0">@if($job->wz){{($job->wz->letter ?? '').($job->wz->number ?? '').'/'.($job->wz->month ?? '').'/'.($job->wz->year ?? '')}}@endif</p>
+                                        </td>
+                                        
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">{{$job->status}}</p>
                                         </td>
