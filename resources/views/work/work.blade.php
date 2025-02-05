@@ -90,7 +90,7 @@
                     @foreach($truck_jobs as $truck_job)
                         <b>ID: </b>{{$truck_job->id}}</br>
                         <b>Klient: </b>{{$truck_job->address->user->name}}</br>
-                        <b>Adres: </b>{{$truck_job->address->adres ?? 'brak'}}</br>
+                        <b>Adres: </b>{{$truck_job->address->adres ?? 'brak'}}, {{$truck_job->address->miasto ?? ''}}</br>
                         <b>Wypompowane: </b>{{$truck_job->pumped}}</br><br>
                     @endforeach   
                 </div>
@@ -144,7 +144,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{$job->id}}</p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->adres ?? ''}} {{$job->address->numer ?? 'brak'}}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->adres ?? ''}} {{$job->address->numer ?? 'brak'}}, {{$job->address->miasto ?? ''}}</p>
                                         </td>
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">{{$job->address->user->name ?? 'brak'}}</p>
@@ -214,7 +214,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{$job->id}}</p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->adres ?? ''}} {{$job->address->numer ?? 'brak'}}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->adres ?? ''}} {{$job->address->numer ?? 'brak'}}, {{$job->address->miasto ?? ''}}</p>
                                         </td>
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">{{$job->user->name ?? ''}}</p>

@@ -58,7 +58,7 @@
                             <div class="form-group">
                                 <label for="user.phone" class="form-control-label">Data</label>
                                 <div class="@error('user.phone')border border-danger rounded-3 @enderror">
-                                    <input class="form-control" type="datetime-local"  id="number" name="date">
+                                    <input class="form-control" type="date" id="number" name="date">
                                 </div>
                             </div>
                         </div>

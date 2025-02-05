@@ -9,6 +9,7 @@ table, th, td {
     Data: {{$date}}
     <thead>
         <tr>
+            <th>LP</th>
             <th>WZ</th>
             <th>Ulica</th>
             <th>Miejscowosc</th>
@@ -20,6 +21,7 @@ table, th, td {
     <tbody>
         @foreach($jobs as $job)
             <tr>
+                <th>{{$job->id}}</th>
                 <th>@if($job->wz){{($job->wz->letter ?? '').($job->wz->number ?? '').'/'.($job->wz->month ?? '').'/'.($job->wz->year ?? '')}}@endif</th>
                 <th>{{$job->address->adres ?? ''}} {{$job->address->numer ?? ''}}</th>
                 <th>{{$job->address->miasto ?? ''}}</th>

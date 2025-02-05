@@ -82,14 +82,35 @@
                                             <p class="text-xs font-weight-bold mb-0">{{$address->zone->name ?? 'brak'}}</p>
                                         </td>
                                         <td class="text-center">
-                                        <form method="POST" action="address/delete">
-                                            @csrf
-                                            <input type="hidden" name="address_id" value="{{$address->id}}">
-                                            <button type="submit" class="btn bg-danger text-white btn-md ">Usuń</button>
-                                        </form>
-                                        <a href="{{ route('address', array('id' => $address->id)) }}">
-                                            <button class="btn bg-wargning btn-md">Edytuj</button>
-                                        </a>
+                                            <button type="button" class="btn bg-danger text-white btn-md" data-bs-toggle="modal" data-bs-target="#deleteAddressModal{{$address->id}}">
+                                                Usuń
+                                            </button>
+
+                                            <div class="modal fade" id="deleteAddressModal{{$address->id}}" tabindex="-1" aria-labelledby="deleteAddressModalLabel{{$address->id}}" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="deleteAddressModalLabel{{$address->id}}">Potwierdzenie usunięcia</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Czy na pewno chcesz usunąć ten adres?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+                                                            <form method="POST" action="{{ url('address/delete') }}">
+                                                                @csrf
+                                                                <input type="hidden" name="address_id" value="{{ $address->id }}">
+                                                                <button type="submit" class="btn btn-danger">Usuń</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <a href="{{ route('address', array('id' => $address->id)) }}">
+                                                <button class="btn bg-wargning btn-md">Edytuj</button>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
