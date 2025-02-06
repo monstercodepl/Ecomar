@@ -14,6 +14,7 @@ use App\Http\Controllers\CatchmentController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\ZoneController;
 use App\Http\Controllers\MunicipalityController;
+use App\Http\Controllers\WzController;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -72,6 +73,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/job/{id}', [JobController::class, 'show'])->name('job');
 	Route::post('/job/new', [JobController::class, 'store']);
 	Route::post('/job/delete', [JobController::class, 'destroy']);
+	Route::get('/wz/download/{job}', [WzController::class, 'download'])->name('wz.download');
+
 
 	Route::get('/trucks', [TruckController::class, 'index'])->name('trucks');
 	Route::get('/truck/new', [TruckController::class, 'create'])->name('create-truck');
