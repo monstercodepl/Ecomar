@@ -1,52 +1,66 @@
 <html>
-<style>
-table, th, td {
-  border:1px solid black;
-}
-</style>
+<head>
+    <style>
+        table, th, td {
+          border:1px solid black;
+        }
+    </style>
+</head>
 <body>
-<table>
-    Data: {{$date}}
-    <thead>
-        <tr>
-            <th>LP</th>
-            <th>WZ</th>
-            <th>Ulica</th>
-            <th>Miejscowosc</th>
-            <th>Wywiezione m3</th>
-            <th>Kwota</th>
-            <th>Rodzaj płatności</th>
-        </tr>
-    </thead>
-    <tbody>
-        @php
-            $total = 0;
-        @endphp
-        @foreach($jobs as $job)
+    @php
+        // Sortowanie kolekcji $jobs według numerycznej części WZ->number.
+        $jobs = $jobs->sortBy(function($job) {
+            return $job->wz ? (int)$job->wz->number : 0;
+        });
+    @endphp
+
+    <table>
+        <caption>Data: {{$date}}</caption>
+        <thead>
             <tr>
-                <th>{{$job->id}}</th>
-                <th>@if($job->wz){{($job->wz->letter ?? '').($job->wz->number ?? '').'/'.($job->wz->month ?? '').'/'.($job->wz->year ?? '')}}@endif</th>
-                <th>{{$job->address->adres ?? ''}} {{$job->address->numer ?? ''}}</th>
-                <th>{{$job->address->miasto ?? ''}}</th>
-                <th>{{$job->pumped ?? ''}}</th>
-                <th>
-                            @if(!$job->address->user->nip)
-                                {{$job->price ?? ''}}
-                                @php
-                                    $total += $job->price;
-                                @endphp
-                            @endif
-                        </th>
-                <th>@if($job->cash)Gotówka @else Przelew @endif</th>
+                <th>LP</th>
+                <th>WZ</th>
+                <th>Ulica</th>
+                <th>Miejscowość</th>
+                <th>Wywiezione m3</th>
+                <th>Kwota</th>
+                <th>Rodzaj płatności</th>
             </tr>
-        @endforeach
-    </tbody>
-    <tfoot>
-        <tr>
-            <th colspan="5" style="text-align:right;">SUMA:</th>
-            <th>{{ $total }}</th>
-            <th></th>
-        </tr>
-    </tfoot>
-</table>
+        </thead>
+        <tbody>
+            @php
+                $total = 0;
+            @endphp
+            @foreach($jobs as $job)
+                <tr>
+                    <td>{{$job->id}}</td>
+                    <td>
+                        @if($job->wz)
+                            {{ ($job->wz->letter ?? '') . ($job->wz->number ?? '') . '/' . ($job->wz->month ?? '') . '/' . ($job->wz->year ?? '') }}
+                        @endif
+                    </td>
+                    <td>{{$job->address->adres ?? ''}} {{$job->address->numer ?? ''}}</td>
+                    <td>{{$job->address->miasto ?? ''}}</td>
+                    <td>{{$job->pumped ?? ''}}</td>
+                    <td>
+                        @if(!$job->address->user->nip)
+                            {{$job->price ?? ''}}
+                            @php
+                                $total += $job->price;
+                            @endphp
+                        @endif
+                    </td>
+                    <td>@if($job->cash)Gotówka @else Przelew @endif</td>
+                </tr>
+            @endforeach
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5" style="text-align:right;">SUMA:</td>
+                <td>{{ $total }}</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
 </body>
+</html>
