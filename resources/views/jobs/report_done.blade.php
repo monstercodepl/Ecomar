@@ -19,6 +19,9 @@ table, th, td {
         </tr>
     </thead>
     <tbody>
+        @php
+            $total = 0;
+        @endphp
         @foreach($jobs as $job)
             <tr>
                 <th>{{$job->id}}</th>
@@ -26,10 +29,25 @@ table, th, td {
                 <th>{{$job->address->adres ?? ''}} {{$job->address->numer ?? ''}}</th>
                 <th>{{$job->address->miasto ?? ''}}</th>
                 <th>{{$job->pumped ?? ''}}</th>
-                <th>@if(!$job->address->user->nip){{$job->price ?? ''}}@endif</th>
+                <th>
+                            @if(!$job->address->user->nip)
+                                {{$job->price ?? ''}}
+                                @php
+                                    // Dodajemy wartość do sumy (upewnij się, że price jest typem liczbowym)
+                                    $total += $job->price;
+                                @endphp
+                            @endif
+                        </th>
                 <th>@if($job->cash)Gotówka @else Przelew @endif</th>
             </tr>
         @endforeach
     </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="5" style="text-align:right;">SUMA:</th>
+            <th>{{ $total }}</th>
+            <th></th>
+        </tr>
+    </tfoot>
 </table>
 </body>
