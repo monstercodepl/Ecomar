@@ -33,7 +33,6 @@ table, th, td {
                             @if(!$job->address->user->nip)
                                 {{$job->price ?? ''}}
                                 @php
-                                    // Dodajemy wartość do sumy (upewnij się, że price jest typem liczbowym)
                                     $total += $job->price;
                                 @endphp
                             @endif
