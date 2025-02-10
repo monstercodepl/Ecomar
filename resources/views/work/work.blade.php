@@ -72,7 +72,7 @@
                                 <form method="POST" action="work/dump">
                                             @csrf
                                                 <input type="hidden" name="truck_id" value="{{$truck->id}}">
-                                                @if(isset($user))<input type="hidden" name="user" value="{{$truck->id}}"></h4>@endif
+                                                @if(isset($user))<input type="hidden" name="user" value="{{$user->id}}"></h4>@endif
                                                 Zlewnia: 
                                                 <select name="catchment_id" id="address" class="form-control">
                                                         <option value=""></option>
@@ -237,7 +237,7 @@
                                         <form method="POST" action="/work/pump">
                                         @csrf
                                             <input class="form-control" type="hidden" name="job_id" value="{{$job->id}}">
-                                            @if(isset($user))<input type="hidden" name="user" value="{{$truck->id}}"></h4>@endif
+                                            @if(isset($user))<input type="hidden" name="user" value="{{$user->id}}"></h4>@endif
                                             Wypompowano:<br> <input class="form-control mb-0" type="text" step="0.5" min="0" name="amount"><br>
                                             Zapłacono gotówką <input class=" mt-2" type="checkbox" name="cash"><br>
                                             <input class="btn bg-gradient-light btn-md mt-3" type="submit">
