@@ -88,6 +88,7 @@ color: #000 !important;
 
     $(document).ready(function () {
   $('#dataTable').DataTable({
+    responsive: true,
     language: {
       "decimal": "",
       "emptyTable": "Brak danych w tabeli",
