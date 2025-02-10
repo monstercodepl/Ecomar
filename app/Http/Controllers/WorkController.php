@@ -101,7 +101,7 @@ class WorkController extends Controller
     {  
         $user = Auth::user();
 
-        if($request->user)
+        if($request->has('user'))
         {
             $user = User::find($request->user);
         }
@@ -175,6 +175,10 @@ class WorkController extends Controller
     public function dump(Request $request)
     {
         $user = Auth::user();
+
+        if($request->has('user')){
+            $user = User::find($request->user);
+        }
 
         $work = new Work;
         $work->amount = $request->amount;
