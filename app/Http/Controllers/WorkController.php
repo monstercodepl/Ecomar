@@ -63,7 +63,7 @@ class WorkController extends Controller
     public function jobs_select(Request $request)
     {
           // has to be filtered by driver
-          $jobs = Job::where('status', 'Nowe')->get();
+          $jobs = Job::where('status', 'Nowe')->where('driver_id', $request->driver_id)->get();
           $user = User::find($request->driver_id);
           $truck = $user->truck;
           $catchments = Catchment::all();
