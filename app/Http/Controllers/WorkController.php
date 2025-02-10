@@ -170,7 +170,7 @@ class WorkController extends Controller
             Mail::to($email)->send($message);
         }
 
-        return Redirect::back();
+        return back();
     }
 
     public function dump(Request $request)
@@ -233,7 +233,7 @@ class WorkController extends Controller
         $truck->job_5 = null;
         $truck->save();
 
-        return redirect('work');
+        return back();
     }
 
     public function status(Request $request)
