@@ -8,6 +8,7 @@ use App\Models\Truck;
 use App\Models\Catchment;
 use App\Mail\JobFinished;
 use App\Models\Wz;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -17,6 +18,12 @@ use Illuminate\Support\Carbon;
 
 class WorkController extends Controller
 {
+    public function select()
+    {
+        $drivers = User::whereNotNull('truck_id')->get();
+
+        return view('work/select', ['drivers' => $drivers]);
+    }
     public function jobs()
     {
         // has to be filtered by driver
@@ -53,9 +60,51 @@ class WorkController extends Controller
         return view('work/work', ['jobs' => $jobs, 'truck' => $truck, 'catchments' => $catchments, 'truck_jobs' => $truck_jobs, 'current_jobs' => $current_jobs]);
     }
 
+    public function jobs_select(Request $request)
+    {
+          // has to be filtered by driver
+          $jobs = Job::where('status', 'Nowe')->get();
+          $user = User::find($request->driver_id);
+          $truck = $user->truck;
+          $catchments = Catchment::all();
+  
+          $current_jobs = Job::where('status', 'pumped')->where('truck_id', $truck->id)->get();
+  
+          $truck_jobs = [];
+          if($truck->job_1){
+              $truck_job = Job::find($truck->job_1);
+              array_push($truck_jobs, $truck_job);
+          }
+          if($truck->job_2){
+              $truck_job = Job::find($truck->job_2);
+              array_push($truck_jobs, $truck_job);
+          }
+          if($truck->job_3){
+              $truck_job = Job::find($truck->job_3);
+              array_push($truck_jobs, $truck_job);
+          }
+          if($truck->job_4){
+              $truck_job = Job::find($truck->job_4);
+              array_push($truck_jobs, $truck_job);
+          }
+          if($truck->job_5){
+              $truck_job = Job::find($truck->job_5);
+              array_push($truck_jobs, $truck_job);
+          }
+  
+  
+          return view('work/work', ['jobs' => $jobs, 'truck' => $truck, 'catchments' => $catchments, 'truck_jobs' => $truck_jobs, 'current_jobs' => $current_jobs, 'user' => $user]);
+      
+    }
+
     public function pump(Request $request)
     {  
         $user = Auth::user();
+
+        if($request->user)
+        {
+            $user = User::find($request->user);
+        }
 
         $truck = $user->truck;
         $truck->amount = $truck->amount + $request->amount;
@@ -120,7 +169,7 @@ class WorkController extends Controller
             Mail::to($email)->send($message);
         }
 
-        return redirect('work');
+        return Redirect::back();
     }
 
     public function dump(Request $request)

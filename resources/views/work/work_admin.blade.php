@@ -9,7 +9,6 @@
                 <div class="card-header pb-0">
                     <div class="d-flex flex-row justify-content-between">
                         <div>
-                            @if(isset($user))<h4>{{$user->name ?? ''}}</h4>@endif
                             <h5 class="mb-0">Pojazd</h5>
                         </div>
                     </div>
@@ -72,7 +71,6 @@
                                 <form method="POST" action="work/dump">
                                             @csrf
                                                 <input type="hidden" name="truck_id" value="{{$truck->id}}">
-                                                @if(isset($user))<input type="hidden" name="user" value="{{$truck->id}}"></h4>@endif
                                                 Zlewnia: 
                                                 <select name="catchment_id" id="address" class="form-control">
                                                         <option value=""></option>
@@ -234,10 +232,9 @@
                                             <p class="text-xs font-weight-bold mb-0">{{$job->pumped}}</p>
                                         </td>
                                         <td class="text-center">
-                                        <form method="POST" action="/work/pump">
+                                        <form method="POST" action="work/pump">
                                         @csrf
                                             <input class="form-control" type="hidden" name="job_id" value="{{$job->id}}">
-                                            @if(isset($user))<input type="hidden" name="user" value="{{$truck->id}}"></h4>@endif
                                             Wypompowano:<br> <input class="form-control mb-0" type="text" step="0.5" min="0" name="amount"><br>
                                             Zapłacono gotówką <input class=" mt-2" type="checkbox" name="cash"><br>
                                             <input class="btn bg-gradient-light btn-md mt-3" type="submit">
