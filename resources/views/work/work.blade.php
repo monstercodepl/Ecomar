@@ -1,7 +1,51 @@
 @extends('layouts.user_type.auth')
 
 @section('content')
-
+<style>
+    @media only screen and (max-width: 600px) {
+  /* Ustawienie wszystkich elementów tabeli jako blok */
+  .responsive-table, 
+  .responsive-table thead, 
+  .responsive-table tbody, 
+  .responsive-table th, 
+  .responsive-table td, 
+  .responsive-table tr {
+    display: block;
+  }
+  
+  /* Ukrycie oryginalnego nagłówka tabeli */
+  .responsive-table thead tr {
+    display: none;
+  }
+  
+  /* Każdy wiersz jako blok z marginesem */
+  .responsive-table tr {
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+  }
+  
+  /* Każda komórka */
+  .responsive-table td {
+    /* Ustawienie paddingu po lewej dla miejsca na etykietę */
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Pseudo-element :before wyświetlający etykietę komórki */
+  .responsive-table td:before {
+    content: attr(data-label);  /* Pobiera wartość z atrybutu data-label */
+    position: absolute;
+    left: 0;
+    width: 45%;
+    padding-left: 0.5rem;
+    font-weight: bold;
+    text-align: left;
+  }
+}
+</style>
 <div>
     <div class="row">
         <div class="col-12">
@@ -175,9 +219,6 @@
                                         Zbiornik
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Wypompowano
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Akcje
                                     </th>
                                 </tr>
@@ -193,9 +234,6 @@
                                         </td>
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">{{$job->address->zbiornik ?? 'brak'}}</p>
-                                        </td>
-                                        <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$job->pumped}}</p>
                                         </td>
                                         <td class="text-center">
                                         <form method="POST" action="/work/pump">
