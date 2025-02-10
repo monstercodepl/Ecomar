@@ -106,7 +106,6 @@ class WorkController extends Controller
             $user = User::find($request->user);
         }
 
-        dump($user);
         $truck = $user->truck;
         $truck->amount = $truck->amount + $request->amount;
         if($truck->job_1 === null) $truck->job_1 = $request->job_id;
@@ -180,8 +179,6 @@ class WorkController extends Controller
         if($request->has('user')){
             $user = User::find($request->user);
         }
-
-        dump($user);
 
         $work = new Work;
         $work->amount = $request->amount;
