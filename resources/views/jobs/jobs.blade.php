@@ -41,6 +41,9 @@
                                         Status
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Komentarz
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Akcje
                                     </th>
                                 </tr>
@@ -69,6 +72,9 @@
                                         
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">{{$job->status}}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="text-xs font-weight-bold mb-0">{{$job->comment ?? ''}}</p>
                                         </td>
                                         <td class="text-center">
                                             <button type="button" class="btn bg-danger text-white btn-md" data-bs-toggle="modal" data-bs-target="#deleteModal{{$job->id}}">

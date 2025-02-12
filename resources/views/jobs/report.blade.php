@@ -30,6 +30,7 @@
                     <th>Ulica</th>
                     <th>Miejscowość</th>
                     <th>Wielkość zbiornika</th>
+                    <th>Komentarz</th>
                     <th>Wywiezione m3</th>
                     <th style="padding-left: 20px; padding-right: 20px;">Zlewnia</th>
                     <th>Zapłacono</th>
@@ -43,6 +44,7 @@
                         <td>{{ $job->address->adres ?? '' }} {{ $job->address->numer ?? '' }}</td>
                         <td>{{ $job->address->miasto ?? '' }}</td>
                         <td>{{ $job->address->zbiornik ?? '' }}</td>
+                        <td>{{ $job->comment ?? ''}}</td>
                         <td></td>
                         <td></td>
                         <td></td>
