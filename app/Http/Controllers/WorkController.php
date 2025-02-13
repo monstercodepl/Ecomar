@@ -146,8 +146,8 @@ class WorkController extends Controller
         $client = $job->address->user;
 
         $email = $client->email;
-
-        if(is_null($client->nip && !$request->has('partial'))){
+        
+        if(is_null($client->nip) && !$request->has('partial')){
             if($client->secondary_email) {
                 $email = $client->secondary_email;
             }
