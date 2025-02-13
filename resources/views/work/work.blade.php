@@ -203,6 +203,7 @@
                                             <input class="form-control" type="hidden" name="job_id" value="{{$job->id}}">
                                             @if(isset($user))<input type="hidden" name="user" value="{{$user->id}}"></h4>@endif
                                             Wypompowano:<br> <input class="form-control mb-0" type="text" step="0.5" min="0" name="amount"><br>
+                                            @if(!$job->partial) Częściowe <input class=" mt-2" type="checkbox" name="partial"><br>@endif
                                             Zapłacono gotówką <input class=" mt-2" type="checkbox" name="cash"><br>
                                             <input class="btn bg-gradient-light btn-md mt-3" type="submit">
                                         </form>

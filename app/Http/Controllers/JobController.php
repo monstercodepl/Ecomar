@@ -30,9 +30,9 @@ class JobController extends Controller
     public function generate(Request $request)
     {
         if($request->driver_id == ''){
-            $jobs = Job::whereRaw('date(schedule) =?', date($request->date))->orderBy('updated_at', 'asc')->get();
+            $jobs = Job::whereRaw('date(schedule) =?', date($request->date))->where('status', 'Nowe')->orderBy('updated_at', 'asc')->get();
         }else{
-            $jobs = Job::where('driver_id', $request->driver_id)->whereRaw('date(schedule) =?', date($request->date))->orderBy('updated_at', 'asc')->get();
+            $jobs = Job::where('driver_id', $request->driver_id)->whereRaw('date(schedule) =?', date($request->date))->where('status', 'Nowe')->orderBy('updated_at', 'asc')->get();
         }
 
 

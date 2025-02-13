@@ -132,17 +132,34 @@ class WorkController extends Controller
         $work->truck_id = $truck->id;
         $work->save();
 
+        if($request->has('partial')) {
+            $newJob = new Job;
+            $newJob->address_id = $job->address_id;
+            $newJob->status = 'Nowe';
+            $newJob->schedule = $job->schedule;
+            $newJob->driver_id = $job->driver_id;
+            $newJob->comment = $job->comment.' częściowo: '.$job->pumped;
+            $newJob->partial = $job->id;
+            $newJob->save();
+        }
+
         $client = $job->address->user;
 
         $email = $client->email;
 
-        if(is_null($client->nip)){
+        if(is_null($client->nip && !$request->has('partial'))){
             if($client->secondary_email) {
                 $email = $client->secondary_email;
             }
 
             if($client->default_email) {
                 $email = 'wz_ecomar@op.pl';
+            }
+
+            if(!is_null($job->partial)) {
+                $originalJob = Job::find($job->partial);
+                $job->pumped = $job->pumped + $originalJob->pumped;
+                $job->price = $job->price + $originalJob->price;
             }
 
             $letter = $user->letter;
