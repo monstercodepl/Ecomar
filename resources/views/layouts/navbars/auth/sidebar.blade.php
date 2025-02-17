@@ -32,7 +32,7 @@
         </a>
       </li>
       @endcan
-      @can('lisa_dzienna')
+      @can('lista_dzienna')
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('daily_report') ? 'active' : '') }}" href="{{ url('daily_report') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
