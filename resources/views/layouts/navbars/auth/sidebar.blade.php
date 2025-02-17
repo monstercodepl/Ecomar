@@ -10,6 +10,7 @@
   <hr class="horizontal dark mt-0">
   <div class="collapse navbar-collapse  w-auto" id="sidenav-collapse-main">
     <ul class="navbar-nav">
+    @can('dashboard')
       <li class="nav-item">
         <a class="nav-link {{ (Request::is('dashboard') ? 'active' : '') }}" href="{{ url('dashboard') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -30,6 +31,8 @@
           <span class="nav-link-text ms-1">Panel Administracyjny</span>
         </a>
       </li>
+      @endcan
+      @can('lisa_dzienna')
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('daily_report') ? 'active' : '') }}" href="{{ url('daily_report') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -51,6 +54,8 @@
             <span class="nav-link-text ms-1">Lista dzienna</span>
         </a>
       </li>
+      @endcan
+      @can('raport_dzienny')
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('done_report') ? 'active' : '') }}" href="{{ url('done_report') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -72,6 +77,8 @@
             <span class="nav-link-text ms-1">Raport dzienny</span>
         </a>
       </li>
+      @endcan
+      @can('zlecenia')
        <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('jobs') ? 'active' : '') }}" href="{{ url('jobs') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -93,6 +100,8 @@
             <span class="nav-link-text ms-1">Zlecenia</span>
         </a>
       </li>
+      @endcan
+      @can('moje_zlecenia')
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('moje-zlecenia') ? 'active' : '') }}" href="{{ url('moje-zlecenia') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -114,6 +123,8 @@
             <span class="nav-link-text ms-1">Moje zlecenia</span>
         </a>
       </li>
+      @endcan
+      @can('faktury')
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('faktury') ? 'active' : '') }}" href="{{ url('faktury') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -123,6 +134,8 @@
             <span class="nav-link-text ms-1">Faktury</span>
         </a>
       </li>
+      @endcan
+      @can('adresy')
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('addresses') ? 'active' : '') }}" href="{{ url('addresses') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -132,6 +145,8 @@
             <span class="nav-link-text ms-1">Adresy</span>
         </a>
       </li>
+      @endcan
+      @can('szambiarki')
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('trucks') ? 'active' : '') }}" href="{{ url('trucks') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -140,6 +155,8 @@
             <span class="nav-link-text ms-1">Szambiarki</span>
         </a>
       </li>
+      @endcan
+      @can('zlewnie')
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('catchments') ? 'active' : '') }}" href="{{ url('catchments') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -161,6 +178,8 @@
             <span class="nav-link-text ms-1">Zlewnie</span>
         </a>
       </li>
+      @endcan
+      @can('strefy')
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('zones') ? 'active' : '') }}" href="{{ url('zones') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -182,6 +201,8 @@
             <span class="nav-link-text ms-1">Strefy</span>
         </a>
       </li>
+      @endcan
+      @can('gminy')
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('municipalities') ? 'active' : '') }}" href="{{ url('municipalities') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -203,6 +224,8 @@
             <span class="nav-link-text ms-1">Gminy</span>
         </a>
       </li>
+      @endcan
+      @can('kierowcy')
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('drivers') ? 'active' : '') }}" href="{{ url('drivers') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -224,6 +247,8 @@
             <span class="nav-link-text ms-1">Kierowcy</span>
         </a>
       </li>
+      @endcan
+      @can('strefa_kierowcy')
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('work') ? 'active' : '') }}" href="{{ url('work') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -245,6 +270,8 @@
             <span class="nav-link-text ms-1">Strefa kierowcy</span>
         </a>
       </li>
+      @endcan
+      @can('strefa_kierowcy_admin')
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('work/select') ? 'active' : '') }}" href="{{ url('work/select') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -266,9 +293,13 @@
             <span class="nav-link-text ms-1">Strefa kierowcy (admin)</span>
         </a>
       </li>
+      @endcan
+      @can('ustawienia')
       <li class="nav-item mt-2">
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Ustawienia</h6>
       </li>
+      @endcan
+      @can('moje_dane')
       <li class="nav-item">
         <a class="nav-link {{ (Request::is('user-profile') ? 'active' : '') }} " href="{{ url('user-profile') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -290,6 +321,8 @@
             <span class="nav-link-text ms-1">Moje dane</span>
         </a>
       </li>
+      @endcan
+      @can('uzytkownicy')
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('user-management') ? 'active' : '') }}" href="{{ url('user-management') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -298,6 +331,8 @@
             <span class="nav-link-text ms-1">Użytkownicy</span>
         </a>
       </li>
+      @endcan
+      @can('sms_api')
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('sms') ? 'active' : '') }}" href="{{ url('sms') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -319,6 +354,7 @@
             <span class="nav-link-text ms-1">SMS API</span>
         </a>
       </li>
+      @endcan
       <li class="nav-item">
   <a class="nav-link collapsed" data-bs-toggle="collapse" href="#dropdownExample" role="button" aria-expanded="false" aria-controls="dropdownExample">
     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">

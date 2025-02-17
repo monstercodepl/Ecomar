@@ -26,6 +26,7 @@
 </style>
 
 <!-- Umieść kontener, w którym będzie renderowany kalendarz -->
+@can('dashboard')
 <div class="row"><div id="calendar"></div></div>
 
 <script>
@@ -66,6 +67,7 @@
     calendar.render();
   });
 </script>
+@endcan
 
 
 @endsection
