@@ -18,6 +18,11 @@ class WzController extends Controller
     public function download($jobId)
     {
         $job = Job::with(['address.zone', 'address.user'])->findOrFail($jobId);
+        if(!is_null($job->partial)) {
+            $originalJob = Job::find($job->partial);
+            $job->pumped = $job->pumped + $originalJob->pumped;
+            $job->price = $job->price + $originalJob->price;    
+        }
 
         $wz = Wz::where('job_id', $jobId)->firstOrFail();
 
