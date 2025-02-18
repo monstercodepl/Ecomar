@@ -28,7 +28,7 @@ class WorkController extends Controller
     {
         // has to be filtered by driver
         $user = Auth::user();
-        $jobs = Job::where('status', 'Nowe')->where('driver_id', $user->id)->get();
+        $jobs = Job::where('status', 'Nowe')->where('driver_id', $user->id)->whereRaw('date(schedule) =?', Carbon::now()->toDateString())->get();
         $truck = $user->truck;
         $catchments = Catchment::all();
 
