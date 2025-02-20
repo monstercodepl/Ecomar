@@ -32,6 +32,9 @@ class WorkController extends Controller
         $truck = $user->truck;
         $catchments = Catchment::all();
 
+        $drivers = User::whereNotNull('truck_id')->get();
+
+
         $current_jobs = Job::where('status', 'pumped')->where('truck_id', $truck->id)->get();
 
         $truck_jobs = [];
@@ -57,7 +60,7 @@ class WorkController extends Controller
         }
 
 
-        return view('work/work', ['jobs' => $jobs, 'truck' => $truck, 'catchments' => $catchments, 'truck_jobs' => $truck_jobs, 'current_jobs' => $current_jobs]);
+        return view('work/work', ['jobs' => $jobs, 'truck' => $truck, 'catchments' => $catchments, 'truck_jobs' => $truck_jobs, 'current_jobs' => $current_jobs, 'drivers' => $drivers]);
     }
 
     public function jobs_select(Request $request)
@@ -257,6 +260,15 @@ class WorkController extends Controller
         $job->save();
 
         return redirect('work');
+    }
+
+    public function give(Request $request)
+    {
+        $job = Job::find($request->job_id);
+        $job->driver_id = $request->driver_id;
+        $job->save();
+
+        return back();
     }
     /**
      * Display a listing of the resource.

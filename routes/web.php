@@ -104,6 +104,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/work/status', [WorkController::class, 'status']);
 	Route::get('/work/select', [WorkController::class, 'select'])->name('select');
 	Route::post('/work/select', [WorkController::class, 'jobs_select']);
+	Route::post('/work/give', [WorkController::class, 'give']);
 	Route::get('/daily_report', [JobController::class, 'daily'])->name('daily_report');
 	Route::post('/generate_report', [JobController::class, 'generate'])->name('generate_report');
 

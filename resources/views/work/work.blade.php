@@ -183,6 +183,11 @@
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Akcje
                                     </th>
+                                    @can('give_job')
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        
+                                    </th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -208,6 +213,22 @@
                                             <input class="btn bg-gradient-light btn-md mt-3" type="submit">
                                         </form>
                                         </td>
+                                        @can('give_job')
+                                        <td class="text-center">
+                                            <form method="POST" action="work/give">
+                                                @csrf
+                                                <input class="form-control" type="hidden" name="job_id" value="{{$job->id}}">   
+                                                Przekaż do: </br>
+                                                <select name="driver_id" class="form-control">
+                                                <option value=""></option>
+                                                @foreach($drivers as $driver)
+                                                <option value="{{$driver->id}}">{{$driver->name}}</option>
+                                                @endforeach
+                                                <input class="btn bg-gradient-light btn-md mt-3" type="submit">
+                                        </select>
+                                            </form>
+                                        </td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                             </tbody>
