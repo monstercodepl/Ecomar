@@ -4,11 +4,53 @@ namespace App\Http\Controllers;
 
 use App\Models\Job;
 use App\Models\Wz;
+use App\Models\User;
+use App\Models\Address;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class WzController extends Controller
 {
+
+    public function index()
+    {
+        $wzs = Wz::all();
+
+        return view('wz.index', ['wzs' => $wzs]);
+    }
+
+    public function create()
+    {
+
+        $addreses = Address::all();
+        $users = User::all();
+
+        return view('wz.create', ['addresses' => $addreses, 'users' => $users]);
+    }
+
+    public function save(Request $request)
+    {
+        $client = User::find($request->client);
+        $address = Address::find($request->address);
+
+        $wzs = Wz::where('letter', $request->letter)->where('month', $request->month)->where('year', $request->year)->get()->count();
+        $wzNumber = $wzs + 1;
+
+        $wz = new Wz;
+        $wz->number = $wzNumber;
+        $wz->letter = $request->letter;
+        $wz->month = $request->month;
+        $wz->year = $request->year;
+        $wz->client_name = $client->name;
+        $wz->userId = $client->id;
+        $wz->client_address = ($address->adres ?? '').' '.($address->numer ?? '').', '.($address->miasto ?? '');
+        $wz->addressId = $address->id;
+        $wz->price = $request->price;
+        $wz->amount = $request->amount;
+        $wz->save();
+
+        return back();
+    }
     /**
      *
      *

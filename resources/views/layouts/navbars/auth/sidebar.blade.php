@@ -124,6 +124,17 @@
         </a>
       </li>
       @endcan
+      @can('wz')
+      <li class="nav-item pb-2">
+        <a class="nav-link {{ (Request::is('wz') ? 'active' : '') }}" href="{{ url('wz') }}">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="fa-solid fa-money-bill-wave"></i>
+
+            </div>
+            <span class="nav-link-text ms-1">Wydania</span>
+        </a>
+      </li>
+      @endcan
       @can('faktury')
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('faktury') ? 'active' : '') }}" href="{{ url('faktury') }}">
