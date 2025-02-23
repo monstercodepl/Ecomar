@@ -39,7 +39,7 @@
                             </div>
                             
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="form-group">
                                 <label for="user.phone" class="form-control-label">Klienci</label>
                                 <div class="@error('user.phone')border border-danger rounded-3 @enderror">
@@ -51,7 +51,7 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="row">
                         <div class="col-md-4">

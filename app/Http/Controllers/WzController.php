@@ -30,8 +30,8 @@ class WzController extends Controller
 
     public function save(Request $request)
     {
-        $client = User::find($request->client);
         $address = Address::find($request->address);
+        $client = $address->user;
 
         $wzs = Wz::where('letter', $request->letter)->where('month', $request->month)->where('year', $request->year)->get()->count();
         $wzNumber = $wzs + 1;
@@ -49,7 +49,7 @@ class WzController extends Controller
         $wz->amount = $request->amount;
         $wz->save();
 
-        return back();
+        return redirect('/wz-create');
     }
     /**
      *
