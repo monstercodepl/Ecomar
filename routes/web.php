@@ -74,9 +74,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/job/new', [JobController::class, 'store']);
 	Route::post('/job/delete', [JobController::class, 'destroy']);
 
-	Route::get('/wz', [WzController::class, 'index'])->name('wz');
+	Route::get('/wz', [WzController::class, 'index'])->name('wzs');
 	Route::get('/wz-create', [WzController::class, 'create'])->name('create-wz');
 	Route::post('/wz-create', [WzController::class, 'save']);
+	Route::get('/wz/{id}', [WzController::class, 'show'])->name('wz');
+	Route::post('/wz-save', [WzController::class, 'update']);
 	Route::get('/wz/download/{job}', [WzController::class, 'download'])->name('wz.download');
 
 

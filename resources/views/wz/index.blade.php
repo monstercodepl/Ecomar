@@ -75,6 +75,11 @@
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">@if($wz->paid) Tak @else Nie @endif</p>
                                         </td>
+                                        <td class="text-center">
+                                            <a href="{{ route('wz', array('id' => $wz->id)) }}">
+                                                <button class="btn bg-wargning btn-md">Edytuj</button>
+                                            </a>
+                                        </td> 
                                     </tr>
                                 @endforeach
                             </tbody>

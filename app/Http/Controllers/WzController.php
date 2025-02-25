@@ -19,6 +19,24 @@ class WzController extends Controller
         return view('wz.index', ['wzs' => $wzs]);
     }
 
+    public function show($id)
+    {        
+        $wz = Wz::find($id);
+        
+        return view('/wz.edit', ['wz' => $wz]);
+    }
+
+    public function update(Request $request)
+    {
+        $wz = Wz::find($request->id);
+
+        $wz->amount = $request->amount;
+        $wz->price = $request->price;
+        $wz->save();
+
+        return redirect('/wz');
+    }
+
     public function create()
     {
 
