@@ -28,7 +28,7 @@ class WorkController extends Controller
     {
         // has to be filtered by driver
         $user = Auth::user();
-        $jobs = Job::where('status', 'Nowe')->where('driver_id', $user->id)->get();
+        $jobs = Job::where('status', 'Nowe')->where('driver_id', $user->id)->whereRaw('date(schedule) =?', Carbon::now()->toDateString())->get();
         $truck = $user->truck;
         $catchments = Catchment::all();
 
@@ -63,14 +63,17 @@ class WorkController extends Controller
         return view('work/work', ['jobs' => $jobs, 'truck' => $truck, 'catchments' => $catchments, 'truck_jobs' => $truck_jobs, 'current_jobs' => $current_jobs, 'drivers' => $drivers]);
     }
 
-    public function jobs_select(Request $request)
+    public function jobs_select($id)
     {
           // has to be filtered by driver
-          $jobs = Job::where('status', 'Nowe')->where('driver_id', $request->driver_id)->get();
-          $user = User::find($request->driver_id);
+          $jobs = Job::where('status', 'Nowe')->where('driver_id', $id)->get();
+          $user = User::find($id);
           $truck = $user->truck;
           $catchments = Catchment::all();
   
+          $drivers = User::whereNotNull('truck_id')->get();
+
+
           $current_jobs = Job::where('status', 'pumped')->where('truck_id', $truck->id)->get();
   
           $truck_jobs = [];
@@ -96,7 +99,7 @@ class WorkController extends Controller
           }
   
   
-          return view('work/work', ['jobs' => $jobs, 'truck' => $truck, 'catchments' => $catchments, 'truck_jobs' => $truck_jobs, 'current_jobs' => $current_jobs, 'user' => $user]);
+          return view('work/work_admin', ['jobs' => $jobs, 'truck' => $truck, 'catchments' => $catchments, 'truck_jobs' => $truck_jobs, 'current_jobs' => $current_jobs, 'user' => $user, 'drivers' => $drivers]);
       
     }
 

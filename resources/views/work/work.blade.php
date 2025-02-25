@@ -265,7 +265,7 @@ function confirmDump() {
                                         </td>
                                         @can('give_job')
                                         <td class="text-center">
-                                            <form method="POST" action="work/give">
+                                            <form method="POST" action="/work/give">
                                                 @csrf
                                                 <input class="form-control" type="hidden" name="job_id" value="{{$job->id}}">   
                                                 Przekaż do: </br>
