@@ -6,7 +6,9 @@ use App\Models\Job;
 use App\Models\Wz;
 use App\Models\User;
 use App\Models\Address;
+use App\Mail\JobFinished;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 class WzController extends Controller
@@ -75,24 +77,59 @@ class WzController extends Controller
      * @param  int  $jobId
      * @return \Illuminate\Http\Response
      */
-    public function download($jobId)
+
+    public function send($id)
     {
-        $job = Job::with(['address.zone', 'address.user'])->findOrFail($jobId);
-        if(!is_null($job->partial)) {
-            $originalJob = Job::find($job->partial);
-            $job->pumped = $job->pumped + $originalJob->pumped;
-            $job->price = $job->price + $originalJob->price;    
+        $wz = Wz::find($id);
+
+        $client = User::find($wz->userId);
+
+        $email = $client->email;
+
+        if($client->secondary_email) {
+            $email = $client->secondary_email;
         }
 
-        $wz = Wz::where('job_id', $jobId)->firstOrFail();
+        if($client->default_email) {
+            $email = 'wz_ecomar@op.pl';
+        }
+
+        $pdf = PDF::loadView('mail.job.finished_pdf', ['wz' => $wz]);
 
         $wzId = $wz->letter . $wz->number . '/' . $wz->month . '/' . $wz->year;
+        $fileName = "WZ_" . str_replace(['/', ' '], '_', $wzId) . ".pdf";
 
-        $pdf = Pdf::loadView('mail.job.finished_pdf', [
-            'job' => $job,
-            'id'  => $wzId,
-        ]);
+        $message = new JobFinished($wz);
+        $message->attachData($pdf->output(), $fileName);
 
+
+        Mail::to($email)->send($message);
+
+        $wz->sent = true;
+        $wz->save();
+
+        return back();
+    }
+
+    public function download($id)
+    {
+        $wz = Wz::find($id);
+
+        $client = User::find($wz->userId);
+
+        $email = $client->email;
+
+        if($client->secondary_email) {
+            $email = $client->secondary_email;
+        }
+
+        if($client->default_email) {
+            $email = 'wz_ecomar@op.pl';
+        }
+
+        $pdf = PDF::loadView('mail.job.finished_pdf', ['wz' => $wz]);
+
+        $wzId = $wz->letter . $wz->number . '/' . $wz->month . '/' . $wz->year;
         $fileName = "WZ_" . str_replace(['/', ' '], '_', $wzId) . ".pdf";
 
         return $pdf->download($fileName);

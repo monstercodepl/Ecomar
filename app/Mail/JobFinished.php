@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\Job;
+use App\Models\Wz;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -18,9 +18,9 @@ class JobFinished extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct( public Job $job)
+    public function __construct(public Wz $wz)
     {
-        $this->subject = ($job->address->adres ?? '').' '.($job->address->numer ?? '').' , '.($job->address->miasto ?? '');
+        $this->subject = $wz->client_address;
     }
 
     /**

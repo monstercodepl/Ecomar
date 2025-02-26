@@ -70,14 +70,24 @@
                                             <p class="text-xs font-weight-bold mb-0">{{$wz->price ?? 'brak'}}</p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">@if($wz->sent)Tak @else Nie @endif</p>
+                                            <p class="text-xs font-weight-bold mb-0 @if($wz->sent)text-success @else text-danger @endif">@if($wz->sent)Tak @else Nie @endif</p>
                                         </td>
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">@if($wz->paid) Tak @else Nie @endif</p>
                                         </td>
                                         <td class="text-center">
+                                            <a href="{{ route('wz-send', array('id' => $wz->id))}}">
+                                                @if($wz->sent)
+                                                    <button class="btn bg-danger text-white btn-md">Wyślij ponownie</button>
+                                                @else
+                                                    <button class="btn bg-success text-white btn-md">Wyślij</button>
+                                                @endif
+                                            </a>
+                                            <a href="{{ route('wz-download', array('id' => $wz->id))}}">
+                                                <button class="btn bg-success text-white btn-md">Pobierz</button>
+                                            </a>
                                             <a href="{{ route('wz', array('id' => $wz->id)) }}">
-                                                <button class="btn bg-wargning btn-md">Edytuj</button>
+                                                <button class="btn bg-warning text-white btn-md">Edytuj</button>
                                             </a>
                                         </td> 
                                     </tr>

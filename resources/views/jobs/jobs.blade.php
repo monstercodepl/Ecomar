@@ -67,7 +67,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ substr($job->schedule, 0, 10) }}                                            </p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0"><a href="{{ route('wz.download', ['job' => $job->id]) }}">@if($job->wz){{($job->wz->letter ?? '').($job->wz->number ?? '').'/'.($job->wz->month ?? '').'/'.($job->wz->year ?? '')}}@endif</a></p>
+                                            <p class="text-xs font-weight-bold mb-0">@if($job->wz){{($job->wz->letter ?? '').($job->wz->number ?? '').'/'.($job->wz->month ?? '').'/'.($job->wz->year ?? '')}}@endif</p>
                                         </td>
                                         
                                         <td class="text-center">

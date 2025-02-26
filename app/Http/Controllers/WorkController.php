@@ -153,43 +153,63 @@ class WorkController extends Controller
 
         $email = $client->email;
         
-        if(is_null($client->nip) && !$request->has('partial')){
-            if($client->secondary_email) {
-                $email = $client->secondary_email;
-            }
-
-            if($client->default_email) {
-                $email = 'wz_ecomar@op.pl';
-            }
+        if(is_null($client->nip)){
 
             if(!is_null($job->partial)) {
                 $originalJob = Job::find($job->partial);
-                $job->pumped = $job->pumped + $originalJob->pumped;
-                $job->price = $job->price + $originalJob->price;
+                $wz = Wz::find($originalJob->wz_id);
+                $wz->amount = $wz->amount + $job->pumped;
+                $wz->price = $wz->price + $job->price;
+                $wz->save();
+
+                
+                if($request->has('cash'))
+                {
+                    $wz->paid = true;
+                    $wz->cash = true;
+                    $wz->save();
+                }
+            } else {
+
+                //tworzenie WZ
+                $letter = $user->letter;
+                $month = Carbon::now()->format('m');
+                $year = Carbon::now()->format('Y');
+
+                $wzs = Wz::where('letter', $letter)->where('month', $month)->where('year', $year)->get()->count();
+                $number = $wzs + 1;
+
+                $wzId = $letter.$number.'/'.$month.'/'.$year;
+
+                $address = $job->address;
+                $client = User::find($address->user_id);
+
+                $wz = new Wz;
+                $wz->number = $number;
+                $wz->month = $month;
+                $wz->year = $year;
+                $wz->letter = $letter;
+                $wz->job_id = $job->id;
+                $wz->client_name = $client->name;
+                $wz->userId = $client->id;
+                $wz->client_address = ($address->adres ?? '').' '.($address->numer ?? '').', '.($address->miasto ?? '');
+                $wz->addressId = $address->id;
+                $wz->price = $job->price;
+                $wz->amount = $job->pumped;
+                $wz->sent = false;
+                $wz->paid = false;
+                $wz->save();
+
+                if($request->has('cash'))
+                {
+                    $wz->paid = true;
+                    $wz->cash = true;
+                    $wz->save();
+                }
+
+                $job->wz_id = $wz->id;
+                $job->save();
             }
-
-            $letter = $user->letter;
-            $month = Carbon::now()->format('m');
-            $year = Carbon::now()->format('Y');
-
-            $wzs = Wz::where('letter', $letter)->where('month', $month)->where('year', $year)->get()->count();
-            $number = $wzs + 1;
-
-            $wzId = $letter.$number.'/'.$month.'/'.$year;
-
-            $wz = new Wz;
-            $wz->number = $number;
-            $wz->month = $month;
-            $wz->year = $year;
-            $wz->letter = $letter;
-            $wz->job_id = $job->id;
-            $wz->save();
-
-            $pdf = PDF::loadView('mail.job.finished_pdf', ['job' => $job, 'id' => $wzId]);
-            $message = new JobFinished($job);
-            $message->attachData($pdf->output(), "wz.pdf");
-
-            Mail::to($email)->send($message);
         }
 
         return back();

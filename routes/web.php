@@ -78,8 +78,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/wz-create', [WzController::class, 'create'])->name('create-wz');
 	Route::post('/wz-create', [WzController::class, 'save']);
 	Route::get('/wz/{id}', [WzController::class, 'show'])->name('wz');
+	Route::get('/wz-send/{id}',[WzController::class, 'send'])->name('wz-send');
+	Route::get('/wz-download/{id}', [WzController::class, 'download'])->name('wz-download');
 	Route::post('/wz-save', [WzController::class, 'update']);
-	Route::get('/wz/download/{job}', [WzController::class, 'download'])->name('wz.download');
 
 
 	Route::get('/trucks', [TruckController::class, 'index'])->name('trucks');
