@@ -75,7 +75,7 @@
                         @if($truck)
 <div class="col-md-6">
     <div class="form-group">
-        <form id="dump-form" method="POST" action="work/dump">
+        <form id="dump-form" method="POST" action="/work/dump">
             @csrf
             <input type="hidden" name="truck_id" value="{{$truck->id}}">
             @if(isset($user))
