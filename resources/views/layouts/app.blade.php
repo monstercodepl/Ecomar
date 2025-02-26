@@ -101,6 +101,7 @@ color: #000 !important;
       "loadingRecords": "Wczytywanie...",
       "processing": "Przetwarzanie...",
       "search": "Szukaj:",
+      "cache": "true",
       "zeroRecords": "Nie znaleziono pasujących wpisów",
       "paginate": {
         "first": "Pierwsza",
