@@ -49,6 +49,13 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('profile');
 	})->name('profile');
 
+	  // Strona filtra raportów
+	  Route::get('/reports/filter', [\App\Http\Controllers\MonthlyReportController::class, 'filter'])->name('reports.filter');
+	  // Raport HTML
+	  Route::get('/reports/monthly', [\App\Http\Controllers\MonthlyReportController::class, 'index'])->name('reports.index');
+	  // Raport PDF
+	  Route::get('/reports/monthly/download', [\App\Http\Controllers\MonthlyReportController::class, 'download'])->name('reports.download');
+
 	Route::get('/user-management', [UsersController::class, 'read'])->name('user-management');
 	Route::get('/user/new', [UsersController::class, 'create'])->name('create-user');
 	Route::post('/user/new', [UsersController::class, 'save'])->name('save-user');
