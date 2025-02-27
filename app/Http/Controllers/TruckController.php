@@ -13,8 +13,7 @@ class TruckController extends Controller
     public function index()
     {
         $trucks = Truck::all();
-
-        return view('trucks/trucks', ['trucks' => $trucks]);
+        return view('trucks.trucks', compact('trucks'));
     }
 
     /**
@@ -22,7 +21,7 @@ class TruckController extends Controller
      */
     public function create()
     {
-        return view('trucks/new-truck');
+        return view('trucks.new-truck');
     }
 
     /**
@@ -30,19 +29,27 @@ class TruckController extends Controller
      */
     public function store(Request $request)
     {
-        $truck = new Truck; 
-        $truck->registration = $request->registration;
-        $truck->capacity = $request->capacity;
-        $truck->vin = $request->vin;
-        $truck->oc_date = $request->oc_date;
-        $truck->oc_number = $request->oc_number;
-        $truck->inspection_date = $request->inspection_date;
-        $truck->amount = 0;
+        // Walidacja danych wejściowych
+        $validated = $request->validate([
+            'registration'    => 'required|string|max:255',
+            'capacity'        => 'required|numeric|min:0',
+            'vin'             => 'required|string|max:255',
+            'oc_date'         => 'required|date',
+            'oc_number'       => 'required|string|max:255',
+            'inspection_date' => 'required|date',
+        ]);
+
+        $truck = new Truck;
+        $truck->registration    = $validated['registration'];
+        $truck->capacity        = $validated['capacity'];
+        $truck->vin             = $validated['vin'];
+        $truck->oc_date         = $validated['oc_date'];
+        $truck->oc_number       = $validated['oc_number'];
+        $truck->inspection_date = $validated['inspection_date'];
+        $truck->amount          = 0;
         $truck->save();
 
-        $trucks = Truck::all();
-
-        return redirect('trucks');
+        return redirect()->route('trucks');
     }
 
     /**
@@ -50,7 +57,7 @@ class TruckController extends Controller
      */
     public function show(Truck $truck)
     {
-        //
+        // Możesz zaimplementować wyświetlanie szczegółów pojazdu, jeżeli będzie potrzebne.
     }
 
     /**
@@ -58,7 +65,7 @@ class TruckController extends Controller
      */
     public function edit(Truck $truck)
     {
-        //
+        // Możesz zaimplementować formularz edycji, jeśli zajdzie taka potrzeba.
     }
 
     /**
@@ -66,7 +73,7 @@ class TruckController extends Controller
      */
     public function update(Request $request, Truck $truck)
     {
-        //
+        // Aktualizacja pojazdu – do implementacji według potrzeb.
     }
 
     /**
@@ -74,9 +81,9 @@ class TruckController extends Controller
      */
     public function destroy(Request $request)
     {
-        $truck = Truck::find($request->truck_id);
+        $truck = Truck::findOrFail($request->truck_id);
         $truck->delete();
 
-        return redirect('trucks');
+        return redirect()->route('trucks');
     }
 }

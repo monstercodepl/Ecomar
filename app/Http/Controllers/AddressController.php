@@ -16,8 +16,7 @@ class AddressController extends Controller
     public function index()
     {
         $addresses = Address::all();
-
-        return view('address/addresses', ['addresses' => $addresses]);
+        return view('address.addresses', compact('addresses'));
     }
 
     /**
@@ -29,7 +28,7 @@ class AddressController extends Controller
         $municipalities = Municipality::all();
         $users = User::all();
         
-        return view('address/new-address', ['zones' => $zones, 'municipalities' => $municipalities, 'users' => $users]);
+        return view('address.new-address', compact('zones', 'municipalities', 'users'));
     }
 
     /**
@@ -37,24 +36,38 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        if(!Address::where('numer', $request->numer)->where('adres', $request->ulica)->where('miasto', $request->miasto)->get()->isEmpty()) {
-            return redirect('addresses');
+        $validated = $request->validate([
+            'numer'         => 'required|string|max:50',
+            'ulica'         => 'required|string|max:255',
+            'miasto'        => 'required|string|max:255',
+            'municipality'  => 'required|exists:municipalities,id',
+            'zone_id'       => 'required|exists:zones,id',
+            'zbiornik'      => 'nullable|string|max:255',
+            'user_id'       => 'nullable|exists:users,id',
+            'aglomeracja'   => 'sometimes',
+        ]);
+
+        $exists = Address::where('numer', $validated['numer'])
+            ->where('adres', $validated['ulica'])
+            ->where('miasto', $validated['miasto'])
+            ->exists();
+
+        if ($exists) {
+            return redirect()->route('addresses');
         }
 
         $address = new Address;
-        $address->numer = $request->numer;
-        $address->adres = $request->ulica;
-        $address->municipality_id = $request->municipality;
-        $address->miasto = $request->miasto;
+        $address->numer = $validated['numer'];
+        $address->adres = $validated['ulica'];
+        $address->municipality_id = $validated['municipality'];
+        $address->miasto = $validated['miasto'];
         $address->aglomeracja = $request->has('aglomeracja');
-        $address->zbiornik = $request->zbiornik;
-        $address->zone_id = $request->zone_id;
-        $address->user_id = $request->user_id;
+        $address->zbiornik = $validated['zbiornik'] ?? null;
+        $address->zone_id = $validated['zone_id'];
+        $address->user_id = $validated['user_id'] ?? null;
         $address->save();
 
-        $addresses = Address::all();
-
-        return redirect('addresses');
+        return redirect()->route('addresses');
     }
 
     /**
@@ -62,12 +75,12 @@ class AddressController extends Controller
      */
     public function show($id)
     {
-        $address = Address::find($id);
+        $address = Address::findOrFail($id);
         $zones = Zone::all();
         $municipalities = Municipality::all();
         $users = User::all();
 
-        return view('address/address', ['address' => $address, 'zones' => $zones, 'municipalities' => $municipalities, 'users' => $users]);
+        return view('address.address', compact('address', 'zones', 'municipalities', 'users'));
     }
 
     /**
@@ -75,7 +88,7 @@ class AddressController extends Controller
      */
     public function edit(Address $address)
     {
-        //
+        // Metoda pusta, formularz edycji jest wyświetlany w metodzie show.
     }
 
     /**
@@ -83,20 +96,30 @@ class AddressController extends Controller
      */
     public function update(Request $request)
     {
-        $address = Address::find($request->id);
-        $address->numer = $request->numer;
-        $address->adres = $request->ulica;
-        $address->municipality_id = $request->municipality;
-        $address->miasto = $request->miasto;
+        $validated = $request->validate([
+            'id'            => 'required|exists:addresses,id',
+            'numer'         => 'required|string|max:50',
+            'ulica'         => 'required|string|max:255',
+            'miasto'        => 'required|string|max:255',
+            'municipality'  => 'required|exists:municipalities,id',
+            'zone_id'       => 'required|exists:zones,id',
+            'zbiornik'      => 'nullable|string|max:255',
+            'user_id'       => 'nullable|exists:users,id',
+            'aglomeracja'   => 'sometimes',
+        ]);
+
+        $address = Address::findOrFail($validated['id']);
+        $address->numer = $validated['numer'];
+        $address->adres = $validated['ulica'];
+        $address->municipality_id = $validated['municipality'];
+        $address->miasto = $validated['miasto'];
         $address->aglomeracja = $request->has('aglomeracja');
-        $address->zbiornik = $request->zbiornik;
-        $address->zone_id = $request->zone_id;
-        $address->user_id = $request->user_id;
+        $address->zbiornik = $validated['zbiornik'] ?? null;
+        $address->zone_id = $validated['zone_id'];
+        $address->user_id = $validated['user_id'] ?? null;
         $address->save();
 
-        $addresses = Address::all();
-
-        return redirect('addresses');
+        return redirect()->route('addresses');
     }
 
     /**
@@ -104,9 +127,9 @@ class AddressController extends Controller
      */
     public function destroy(Request $request)
     {
-        $address = Address::find($request->address_id);
+        $address = Address::findOrFail($request->address_id);
         $address->delete();
 
-        return redirect('addresses');
+        return redirect()->route('addresses');
     }
 }

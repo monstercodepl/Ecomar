@@ -10,128 +10,130 @@ use App\Mail\JobFinished;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class WzController extends Controller
 {
-
     public function index()
     {
         $wzs = Wz::all();
-
-        return view('wz.index', ['wzs' => $wzs]);
+        return view('wz.index', compact('wzs'));
     }
 
-    public function show($id)
+    public function show(Wz $wz)
     {        
-        $wz = Wz::find($id);
-        
-        return view('/wz.edit', ['wz' => $wz]);
+        return view('wz.edit', compact('wz'));
     }
 
-    public function update(Request $request)
+    public function update(Request $request, Wz $wz)
     {
-        $wz = Wz::find($request->id);
+        $validated = $request->validate([
+            'amount' => 'required|numeric|min:0',
+            'price'  => 'required|numeric|min:0',
+        ]);
 
-        $wz->amount = $request->amount;
-        $wz->price = $request->price;
+        $wz->amount = $validated['amount'];
+        $wz->price = $validated['price'];
         $wz->save();
 
-        return redirect('/wz');
+        return redirect()->route('wzs');
     }
 
     public function create()
     {
-
-        $addreses = Address::all();
+        $addresses = Address::all();
         $users = User::all();
-
-        return view('wz.create', ['addresses' => $addreses, 'users' => $users]);
+        return view('wz.create', compact('addresses', 'users'));
     }
 
     public function save(Request $request)
     {
-        $address = Address::find($request->address);
+        $validated = $request->validate([
+            'address' => 'required|exists:addresses,id',
+            'letter'  => 'required|string|max:10',
+            'month'   => 'required|string|max:2',
+            'year'    => 'required|string|max:4',
+            'price'   => 'required|numeric|min:0',
+            'amount'  => 'required|numeric|min:0',
+        ]);
+
+        $address = Address::findOrFail($validated['address']);
         $client = $address->user;
 
-        $wzs = Wz::where('letter', $request->letter)->where('month', $request->month)->where('year', $request->year)->get()->count();
-        $wzNumber = $wzs + 1;
+        $wzsCount = Wz::where('letter', $validated['letter'])
+            ->where('month', $validated['month'])
+            ->where('year', $validated['year'])
+            ->count();
+        $wzNumber = $wzsCount + 1;
 
         $wz = new Wz;
         $wz->number = $wzNumber;
-        $wz->letter = $request->letter;
-        $wz->month = $request->month;
-        $wz->year = $request->year;
+        $wz->letter = $validated['letter'];
+        $wz->month = $validated['month'];
+        $wz->year = $validated['year'];
         $wz->client_name = $client->name;
         $wz->userId = $client->id;
-        $wz->client_address = ($address->adres ?? '').' '.($address->numer ?? '').', '.($address->miasto ?? '');
+        $wz->client_address = trim(($address->adres ?? '') . ' ' . ($address->numer ?? '') . ', ' . ($address->miasto ?? ''));
         $wz->addressId = $address->id;
-        $wz->price = $request->price;
-        $wz->amount = $request->amount;
+        $wz->price = $validated['price'];
+        $wz->amount = $validated['amount'];
         $wz->save();
 
-        return redirect('/wz-create');
+        return redirect()->route('create-wz');
     }
-    /**
-     *
-     *
-     * @param  int  $jobId
-     * @return \Illuminate\Http\Response
-     */
 
-    public function send($id)
+    public function send(Wz $wz)
     {
-        $wz = Wz::find($id);
+        $client = User::findOrFail($wz->userId);
+        $email = $this->determineClientEmail($client);
 
-        $client = User::find($wz->userId);
-
-        $email = $client->email;
-
-        if($client->secondary_email) {
-            $email = $client->secondary_email;
-        }
-
-        if($client->default_email) {
-            $email = 'wz_ecomar@op.pl';
-        }
-
-        $pdf = PDF::loadView('mail.job.finished_pdf', ['wz' => $wz]);
-
-        $wzId = $wz->letter . $wz->number . '/' . $wz->month . '/' . $wz->year;
-        $fileName = "WZ_" . str_replace(['/', ' '], '_', $wzId) . ".pdf";
+        $pdf = Pdf::loadView('mail.job.finished_pdf', ['wz' => $wz]);
+        $fileName = $this->generatePdfFileName($wz);
 
         $message = new JobFinished($wz);
         $message->attachData($pdf->output(), $fileName);
 
-
-        Mail::to($email)->send($message);
-
-        $wz->sent = true;
-        $wz->save();
+        try {
+            Mail::to($email)->send($message);
+            $wz->sent = true;
+            $wz->save();
+        } catch (\Exception $e) {
+            Log::error('Error sending WZ email: ' . $e->getMessage());
+            // Opcjonalnie: przekazać komunikat o błędzie do widoku
+        }
 
         return back();
     }
 
-    public function download($id)
+    public function download(Wz $wz)
     {
-        $wz = Wz::find($id);
+        $pdf = Pdf::loadView('mail.job.finished_pdf', ['wz' => $wz]);
+        $fileName = $this->generatePdfFileName($wz);
+        return $pdf->download($fileName);
+    }
 
-        $client = User::find($wz->userId);
+    // Prywatne metody pomocnicze
 
+    private function generateWzId(Wz $wz): string
+    {
+        return $wz->letter . $wz->number . '/' . $wz->month . '/' . $wz->year;
+    }
+
+    private function generatePdfFileName(Wz $wz): string
+    {
+        $wzId = $this->generateWzId($wz);
+        return "WZ_" . str_replace(['/', ' '], '_', $wzId) . ".pdf";
+    }
+
+    private function determineClientEmail(User $client): string
+    {
         $email = $client->email;
-
-        if($client->secondary_email) {
+        if ($client->secondary_email) {
             $email = $client->secondary_email;
         }
-
-        if($client->default_email) {
+        if ($client->default_email) {
             $email = 'wz_ecomar@op.pl';
         }
-
-        $pdf = PDF::loadView('mail.job.finished_pdf', ['wz' => $wz]);
-
-        $wzId = $wz->letter . $wz->number . '/' . $wz->month . '/' . $wz->year;
-        $fileName = "WZ_" . str_replace(['/', ' '], '_', $wzId) . ".pdf";
-
-        return $pdf->download($fileName);
+        return $email;
     }
 }
