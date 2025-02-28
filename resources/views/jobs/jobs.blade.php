@@ -20,23 +20,36 @@
         </div>
     </div>
 
-    <!-- Tabela DataTables -->
-    <div class="table-responsive">
-        <table class="table table-bordered" id="jobs-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Adres</th>
-                    <th>Klient</th>
-                    <th>Kierowca</th>
-                    <th>Data</th>
-                    <th>WZ</th>
-                    <th>Status</th>
-                    <th>Komentarz</th>
-                    <th>Akcje</th>
-                </tr>
-            </thead>
-        </table>
+    <div class="card mb-4 mx-4">
+        <div class="card-header pb-0">
+            <div class="d-flex flex-row justify-content-between">
+                <div>
+                    <h5 class="mb-0">Wszystkie zlecenia</h5>
+                </div>
+                <a href="{{route('create-job')}}" class="btn bg-gradient-primary btn-sm mb-0" type="button">
+                    +&nbsp; Nowe zlecenie
+                </a>
+            </div>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0" id="jobs-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th class="text-center">Adres</th>
+                            <th class="text-center">Klient</th>
+                            <th class="text-center">Kierowca</th>
+                            <th class="text-center">Data</th>
+                            <th class="text-center">WZ</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Komentarz</th>
+                            <th class="text-center">Akcje</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
