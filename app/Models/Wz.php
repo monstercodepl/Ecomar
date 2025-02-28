@@ -26,6 +26,11 @@ class Wz extends Model
         'cash',
     ];
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class, 'wz_id');
+    }
+    
     public function job()
     {
         return $this->belongsTo(Job::class, 'job_id');

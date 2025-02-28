@@ -15,6 +15,11 @@ use App\Http\Controllers\WorkController;
 use App\Http\Controllers\ZoneController;
 use App\Http\Controllers\MunicipalityController;
 use App\Http\Controllers\WzController;
+use App\Http\Controllers\BillingController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PkDocumentController;
+
+
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -41,9 +46,6 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('dashboard', ['jobs' => $jobs]);
 	})->name('Admin');
 
-	Route::get('billing', function () {
-		return view('billing');
-	})->name('billing');
 
 	Route::get('profile', function () {
 		return view('profile');
@@ -61,6 +63,15 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/user/new', [UsersController::class, 'save'])->name('save-user');
 	Route::get('/user/{id}', [UsersController::class, 'show'])->name('user');
 	Route::put('/user', [UsersController::class, 'update']);
+
+	Route::get('/pk-documents', [PkDocumentController::class, 'index'])->name('pk_documents.index');
+	Route::get('/pk-documents/create', [PkDocumentController::class, 'create'])->name('pk_documents.create');
+	Route::post('/pk-documents', [PkDocumentController::class, 'store'])->name('pk_documents.store');
+
+	Route::get('/billings', [BillingController::class, 'index'])->name('billings.index');
+
+	Route::get('/payments/create', [PaymentController::class, 'create'])->name('payments.create');
+	Route::post('/payments', [PaymentController::class, 'store'])->name('payments.store');
 
 	Route::get('/drivers', [UsersController::class, 'drivers'])->name('drivers');
 	Route::get('/driver/new', [UsersController::class, 'createDriver'])->name('create-driver');
