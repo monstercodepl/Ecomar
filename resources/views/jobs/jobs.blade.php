@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div>
     <h5 class="mb-4">Wszystkie zlecenia</h5>
 
     <!-- Formularz filtrowania po dacie -->
