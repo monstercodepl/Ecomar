@@ -21,26 +21,16 @@
                 <h6 class="mb-0">Wybierz kierowce</h6>
             </div>
             <div class="card-body pt-4 p-3">
-                    <form action="/work/select" method="POST" target="_blank" role="form text-left">
-                        @csrf
-                        @method('POST')
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="user.phone" class="form-control-label">Kierowca</label>
-                                    <div class="@error('user.phone')border border-danger rounded-3 @enderror">
-                                        <select name="driver_id" id="job_2" class="form-control">
-                                                <option value=""></option>
-                                                @foreach($drivers as $driver)
-                                                <option value="{{$driver->id}}">{{$driver->name}}</option>
-                                                @endforeach
-                                        </select>
-                                    </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="user.phone" class="form-control-label">Kierowca</label>
+                            <div class="@error('user.phone')border border-danger rounded-3 @enderror">                                    
+                                @foreach($drivers as $driver)
+                                <button onclick="window.location='{{ url("work/select/$driver->id")}}'">{{$driver->name}}</button></br>
+                                @endforeach
                             </div>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">Wybierz</button>
                     </div>
-                    </form>
+                </div>
             </div>
         </div>
     </div>

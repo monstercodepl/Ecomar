@@ -233,37 +233,55 @@ function confirmDump() {
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Akcje
                                     </th>
+                                    @can('give_job')
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        
+                                    </th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach ($jobs as $job)
-<tr>
-    <td class="ps-4">
-        <p class="text-xs font-weight-bold mb-0">{{$job->id}}</p>
-    </td>
-    <td class="text-center">
-        <p class="text-xs font-weight-bold mb-0">{{$job->address->adres ?? ''}} {{$job->address->numer ?? 'brak'}}, {{$job->address->miasto ?? ''}}</p>
-    </td>
-    <td class="text-center">
-        <p class="text-xs font-weight-bold mb-0">{{$job->address->zbiornik ?? 'brak'}}</p>
-    </td>
-    <td class="text-center">
-        <form id="pump-form-{{$job->id}}" method="POST" action="/work/pump">
-            @csrf
-            <input class="form-control" type="hidden" name="job_id" value="{{$job->id}}">
-            @if(isset($user))
-                <input type="hidden" name="user" value="{{$user->id}}">
-            @endif
-            Wypompowano:<br> 
-            <input class="form-control mb-0" type="number" step="0.5" min="0" name="amount" id="amount-{{$job->id}}" required><br>
-            @if(!$job->partial) Częściowe <input class="mt-2" type="checkbox" name="partial"><br>@endif
-            Zapłacono gotówką <input class="mt-2" type="checkbox" name="cash"><br>
-            <button type="button" class="btn bg-gradient-light btn-md mt-3" onclick="confirmPump({{$job->id}})">Wyślij</button>
-        </form>
-    </td>
-</tr>
-@endforeach
-
+                                @foreach ($jobs as $job)
+                                    <tr>
+                                        <td class="ps-4">
+                                            <p class="text-xs font-weight-bold mb-0">{{$job->id}}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->adres ?? ''}} {{$job->address->numer ?? 'brak'}}, {{$job->address->miasto ?? ''}}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->zbiornik ?? 'brak'}}</p>
+                                        </td>
+                                        <td class="text-center">
+                                        <form  id="pump-form-{{$job->id}}" method="POST" action="/work/pump">
+                                        @csrf
+                                            <input class="form-control" type="hidden" name="job_id" value="{{$job->id}}">
+                                            @if(isset($user))<input type="hidden" name="user" value="{{$user->id}}"></h4>@endif
+                                            Wypompowano:<br> <input class="form-control mb-0" type="text" step="0.5" min="0" name="amount" id="amount-{{$job->id}}"><br>
+                                            @if(!$job->partial) Częściowe <input class=" mt-2" type="checkbox" name="partial"><br>@endif
+                                            Zapłacono gotówką <input class=" mt-2" type="checkbox" name="cash"><br>
+                                            <button class="btn bg-gradient-light btn-md mt-3" type="button" onclick="confirmPump({{$job->id}})"> Wyślij </button>
+                                        </form>
+                                        </td>
+                                        @can('give_job')
+                                        <td class="text-center">
+                                            <form method="POST" action="/work/give">
+                                                @csrf
+                                                <input class="form-control" type="hidden" name="job_id" value="{{$job->id}}">   
+                                                Przekaż do: </br>
+                                                <select name="driver_id" class="form-control">
+                                                <option value=""></option>
+                                                @foreach($drivers as $driver)
+                                                <option value="{{$driver->id}}">{{$driver->name}}</option>
+                                                @endforeach
+                                                <input class="btn bg-gradient-light btn-md mt-3" type="submit">
+                                        </select>
+                                            </form>
+                                        </td>
+                                        @endcan
+                                    </tr>
+                                @endforeach
+                      
 <!-- Modal -->
 <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -299,6 +317,7 @@ function confirmPump(jobId) {
 
     document.getElementById('confirmButton').onclick = function () {
         document.getElementById('pump-form-' + jobId).submit();
+        document.getElementById('confirmButton').disabled = true;
     };
 }
 </script>

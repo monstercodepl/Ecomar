@@ -2,118 +2,77 @@
 
 @section('content')
 
-<div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card mb-4 mx-4">
-                <div class="card-header pb-0">
-                    <div class="d-flex flex-row justify-content-between">
-                        <div>
-                            <h5 class="mb-0">Wszystkie zlecenia</h5>
-                        </div>
-                        <a href="{{route('create-job')}}" class="btn bg-gradient-primary btn-sm mb-0" type="button">+&nbsp; Nowe zlecenie</a>
-                    </div>
-                </div>
-                <div class="card-body px-0 pt-0 pb-2">
-                    <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0" id="dataTable">
-                            <thead>
-                                <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        ID
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Adres
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Klient
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Kierowca
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Data
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        WZ
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Status
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Komentarz
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Akcje
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($jobs as $job)
-                                    <tr>
-                                        <td class="ps-4">
-                                            <p class="text-xs font-weight-bold mb-0">{{$job->id}}</p>
-                                        </td>
-                                        <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->adres ?? ''}} {{$job->address->numer ?? 'brak'}}, {{$job->address->miasto ?? ''}}</p>
-                                        </td>
-                                        <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$job->address->user->name ?? 'brak'}} {{$job->address->user->email ?? 'brak'}}</p>
-                                        </td>
-                                        <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$job->driver->name ?? ''}}</p>
-                                        </td>
-                                        <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{ substr($job->schedule, 0, 10) }}                                            </p>
-                                        </td>
-                                        <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0"><a href="{{ route('wz.download', ['job' => $job->id]) }}">@if($job->wz){{($job->wz->letter ?? '').($job->wz->number ?? '').'/'.($job->wz->month ?? '').'/'.($job->wz->year ?? '')}}@endif</a></p>
-                                        </td>
-                                        
-                                        <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$job->status}}</p>
-                                        </td>
-                                        <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$job->comment ?? ''}}</p>
-                                        </td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn bg-danger text-white btn-md" data-bs-toggle="modal" data-bs-target="#deleteModal{{$job->id}}">
-                                                 Usuń
-                                            </button>
+<div class="container">
+    <h5 class="mb-4">Wszystkie zlecenia</h5>
 
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="deleteModal{{$job->id}}" tabindex="-1" aria-labelledby="deleteModalLabel{{$job->id}}" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="deleteModalLabel{{$job->id}}">Potwierdzenie usunięcia</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            Czy na pewno chcesz usunąć to zlecenie?
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
-                                                            <form method="POST" action="job/delete">
-                                                                @csrf
-                                                                <input type="hidden" name="job_id" value="{{$job->id}}">
-                                                                <button type="submit" class="btn btn-danger">Usuń</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <a href="{{ route('job', array('id' => $job->id)) }}"><button class="btn bg-wargning btn-md">Edytuj</button></a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+    <!-- Formularz filtrowania po dacie -->
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label for="start_date">Data początkowa:</label>
+            <input type="date" id="start_date" class="form-control">
+        </div>
+        <div class="col-md-4">
+            <label for="end_date">Data końcowa:</label>
+            <input type="date" id="end_date" class="form-control">
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+            <button id="filterButton" class="btn btn-primary">Filtruj</button>
         </div>
     </div>
+
+    <!-- Tabela DataTables -->
+    <div class="table-responsive">
+        <table class="table table-bordered" id="jobs-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Adres</th>
+                    <th>Klient</th>
+                    <th>Kierowca</th>
+                    <th>Data</th>
+                    <th>WZ</th>
+                    <th>Status</th>
+                    <th>Komentarz</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 </div>
- 
+
+<!-- DataTables JavaScript -->
+<script>
+$(document).ready(function() {
+    var table = $('#jobs-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '{{ route("jobs.data") }}',
+            data: function (d) {
+                d.start_date = $('#start_date').val();
+                d.end_date = $('#end_date').val();
+            }
+        },
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'address.adres', name: 'address.adres', defaultContent: '' },
+            { data: 'address.user.name', name: 'address.user.name', defaultContent: 'brak' },
+            { data: 'driver.name', name: 'driver.name', defaultContent: '' },
+            { data: 'schedule', name: 'schedule', render: function(data) { return data.substr(0, 10); }},
+            { data: 'wz', name: 'wz', defaultContent: '', render: function(data, type, row) {
+                return data ? `${data.letter || ''}${data.number || ''}/${data.month || ''}/${data.year || ''}` : '';
+            }},
+            { data: 'status', name: 'status' },
+            { data: 'comment', name: 'comment', defaultContent: '' },
+            { data: 'actions', name: 'actions', orderable: false, searchable: false }
+        ]
+    });
+
+    // Obsługa filtrowania po dacie
+    $('#filterButton').click(function() {
+        table.ajax.reload();
+    });
+});
+</script>
+
 @endsection

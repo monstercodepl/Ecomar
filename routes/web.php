@@ -49,6 +49,13 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('profile');
 	})->name('profile');
 
+	  // Strona filtra raportów
+	  Route::get('/reports/filter', [\App\Http\Controllers\MonthlyReportController::class, 'filter'])->name('reports.filter');
+	  // Raport HTML
+	  Route::get('/reports/monthly', [\App\Http\Controllers\MonthlyReportController::class, 'index'])->name('reports.index');
+	  // Raport PDF
+	  Route::get('/reports/monthly/download', [\App\Http\Controllers\MonthlyReportController::class, 'download'])->name('reports.download');
+
 	Route::get('/user-management', [UsersController::class, 'read'])->name('user-management');
 	Route::get('/user/new', [UsersController::class, 'create'])->name('create-user');
 	Route::post('/user/new', [UsersController::class, 'save'])->name('save-user');
@@ -66,14 +73,26 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('/address', [AddressController::class, 'update']);
 	Route::post('/address/delete', [AddressController::class, 'destroy']);
 
-	Route::get('/jobs', [JobController::class, 'index'])->name('jobs');
+	Route::get('/jobs/data', [JobController::class, 'getJobs'])->name('jobs.data');
+	Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
 	Route::get('/moje-zlecenia', [JobController::class, 'index_client'])->name('client_jobs');
-	Route::post('/job', [JobController::class, 'update']);
+	Route::put('/job', [JobController::class, 'update'])->name('jobs.update');
 	Route::get('/job/new', [JobController::class, 'create'])->name('create-job');
 	Route::get('/job/{id}', [JobController::class, 'show'])->name('job');
 	Route::post('/job/new', [JobController::class, 'store']);
 	Route::post('/job/delete', [JobController::class, 'destroy']);
-	Route::get('/wz/download/{job}', [WzController::class, 'download'])->name('wz.download');
+
+	Route::get('/jobs/{id}/edit-partial', [\App\Http\Controllers\JobController::class, 'editPartial'])->name('jobs.editPartial');
+	Route::put('/jobs/update-partial', [\App\Http\Controllers\JobController::class, 'updatePartial'])->name('jobs.updatePartial');
+
+
+	Route::get('/wz', [WzController::class, 'index'])->name('wzs');
+	Route::get('/wz-create', [WzController::class, 'create'])->name('create-wz');
+	Route::post('/wz-create', [WzController::class, 'save']);
+	Route::get('/wz/{id}', [WzController::class, 'show'])->name('wz');
+	Route::get('/wz-send/{id}',[WzController::class, 'send'])->name('wz-send');
+	Route::get('/wz-download/{id}', [WzController::class, 'download'])->name('wz-download');
+	Route::post('/wz-save', [WzController::class, 'update']);
 
 
 	Route::get('/trucks', [TruckController::class, 'index'])->name('trucks');
@@ -103,7 +122,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/work/dump', [WorkController::class, 'dump']);
 	Route::post('/work/status', [WorkController::class, 'status']);
 	Route::get('/work/select', [WorkController::class, 'select'])->name('select');
-	Route::post('/work/select', [WorkController::class, 'jobs_select']);
+	Route::get('/work/select/{id}', [WorkController::class, 'jobs_select'])->name('jobs_select');
+	Route::post('/work/give', [WorkController::class, 'give']);
 	Route::get('/daily_report', [JobController::class, 'daily'])->name('daily_report');
 	Route::post('/generate_report', [JobController::class, 'generate'])->name('generate_report');
 
