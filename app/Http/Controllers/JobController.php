@@ -25,7 +25,17 @@ class JobController extends Controller
      */
     public function getJobs(Request $request)
     {
-        $query = Job::with(['address', 'address.user', 'driver', 'wz'])->select('jobs.*');
+        // Dołączamy tabelę wzs, aby mieć dostęp do pól z WZ
+        $query = Job::query()
+            ->leftJoin('wzs', 'jobs.wz_id', '=', 'wzs.id')
+            ->with(['address', 'address.user', 'driver'])
+            ->select(
+                'jobs.*',
+                'wzs.letter as wz_letter',
+                'wzs.number as wz_number',
+                'wzs.month as wz_month',
+                'wzs.year as wz_year'
+            );
 
         // Filtracja po dacie (jeśli ustawiona)
         if ($request->filled('start_date') && $request->filled('end_date')) {
@@ -37,6 +47,9 @@ class JobController extends Controller
         }
 
         return DataTables::eloquent($query)
+            ->addColumn('wz', function($job) {
+                return $job->wz_letter . $job->wz_number . '/' . $job->wz_month . '/' . $job->wz_year;
+            })
             ->addColumn('actions', function ($job) {
                 return '
                     <button type="button" class="btn bg-danger text-white btn-md" data-bs-toggle="modal" data-bs-target="#deleteModal'.$job->id.'">
@@ -63,7 +76,9 @@ class JobController extends Controller
                             </div>
                         </div>
                     </div>
-                    <a href="'.route('job', ['id' => $job->id]).'"><button class="btn bg-warning btn-md">Edytuj</button></a>
+                    <a href="'.route('job', ['id' => $job->id]).'">
+                        <button class="btn bg-warning btn-md">Edytuj</button>
+                    </a>
                 ';
             })
             ->rawColumns(['actions'])

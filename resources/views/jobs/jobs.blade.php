@@ -20,38 +20,38 @@
         </div>
     </div>
 
-        <div class="card mb-4">
-            <div class="card-header pb-0">
-                <div class="d-flex flex-row justify-content-between">
-                    <div>
-                        <h5 class="mb-0">Wszystkie zlecenia</h5>
-                    </div>
-                    <a href="{{route('create-job')}}" class="btn bg-gradient-primary btn-sm mb-0" type="button">
-                        +&nbsp; Nowe zlecenie
-                    </a>
+    <div class="card mb-4">
+        <div class="card-header pb-0">
+            <div class="d-flex flex-row justify-content-between">
+                <div>
+                    <h5 class="mb-0">Wszystkie zlecenia</h5>
                 </div>
+                <a href="{{ route('create-job') }}" class="btn bg-gradient-primary btn-sm mb-0" type="button">
+                    +&nbsp; Nowe zlecenie
+                </a>
             </div>
-            <div class="card-body px-0 pt-0 pb-2">
-                <div class="table-responsive p-0">
-                    <table class="table align-items-center mb-0" id="jobs-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th class="text-center">Adres</th>
-                                <th class="text-center">Klient</th>
-                                <th class="text-center">Kierowca</th>
-                                <th class="text-center">Data</th>
-                                <th class="text-center">WZ</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Komentarz</th>
-                                <th class="text-center">Akcje</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0" id="jobs-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th class="text-center">Adres</th>
+                            <th class="text-center">Klient</th>
+                            <th class="text-center">Kierowca</th>
+                            <th class="text-center">Data</th>
+                            <th class="text-center">WZ</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Komentarz</th>
+                            <th class="text-center">Akcje</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
+</div>
 
 <!-- DataTables JavaScript -->
 <script>
@@ -67,16 +67,22 @@ $(document).ready(function() {
             }
         },
         columns: [
-            { data: 'id', name: 'id' },
+            { data: 'id', name: 'jobs.id' },
             { data: 'address.adres', name: 'address.adres', defaultContent: '' },
             { data: 'address.user.name', name: 'address.user.name', defaultContent: 'brak' },
             { data: 'driver.name', name: 'driver.name', defaultContent: '' },
-            { data: 'schedule', name: 'schedule', render: function(data) { return data.substr(0, 10); }},
-            { data: 'wz', name: 'wz', defaultContent: '', render: function(data, type, row) {
-                return data ? `${data.letter || ''}${data.number || ''}/${data.month || ''}/${data.year || ''}` : '';
-            }},
-            { data: 'status', name: 'status' },
-            { data: 'comment', name: 'comment', defaultContent: '' },
+            { data: 'schedule', name: 'jobs.schedule', render: function(data) { return data.substr(0, 10); }},
+            { 
+                data: 'wz', 
+                name: 'wzs.letter',  // kolumna z joinowanej tabeli wzs
+                defaultContent: '',
+                // render: function(data, type, row) {
+                //     dd(row);
+                //     return row.wz_letter + row.wz_number + '/' + row.wz_month + '/' + row.wz_year;
+                // }
+            },
+            { data: 'status', name: 'jobs.status' },
+            { data: 'comment', name: 'jobs.comment', defaultContent: '' },
             { data: 'actions', name: 'actions', orderable: false, searchable: false }
         ]
     });
