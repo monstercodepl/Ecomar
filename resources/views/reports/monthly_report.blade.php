@@ -7,7 +7,7 @@
     <!-- Link do pobrania PDF -->
     <a href="{{ route('reports.download', request()->query()) }}" class="btn btn-success mb-3">Pobierz jako PDF</a>
 
-    <!-- Formularz filtra (opcjonalny) -->
+    <!-- Formularz filtra -->
     <form action="{{ route('reports.index') }}" method="GET" class="mb-3">
         <div class="row">
             <div class="col-md-4">
@@ -16,7 +16,7 @@
                     <option value="">Wszystkie adresy</option>
                     @foreach($addresses as $addr)
                         <option value="{{ $addr->id }}" {{ (isset($addressId) && $addressId == $addr->id) ? 'selected' : '' }}>
-                            {{$addr->adres}} {{$addr->numer}}, {{$addr->miasto}}
+                            {{ $addr->adres }} {{ $addr->numer }}, {{ $addr->miasto }}
                         </option>
                     @endforeach
                 </select>
@@ -37,42 +37,94 @@
                     Pokaż komentarze
                 </label>
             </div>
+            <div class="col-md-4">
+                <label>
+                    <input type="checkbox" name="show_price" value="1" {{ $showPrice ? 'checked' : '' }}>
+                    Pokaż cenę
+                </label>
+            </div>
         </div>
         <button type="submit" class="btn btn-primary mt-3">Zastosuj filtry</button>
     </form>
 
-    <!-- Tabela zleceń (grupowanych) -->
+    <!-- Tabela zleceń -->
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Data wykonania</th>
-                <th>Adres</th>
-                <th>Wypompowane (m³)</th>
-                <th>Cena</th>
-                @if($showComments)
-                    <th>Komentarz</th>
+                @if($addressId)
+                    <!-- Tryb z konkretnym adresem -->
+                    <th>ID</th>
+                    <th>Data wykonania</th>
+                    <th>Adres</th>
+                    <th>Liczba zleceń w grupie</th>
+                    <th>Wypompowane (m³)</th>
+                    @if($showPrice)
+                        <th>Cena</th>
+                    @endif
+                    @if($showComments)
+                        <th>Komentarz</th>
+                    @endif
+                @else
+                    <!-- Tryb dla wszystkich adresów -->
+                    <th>Adres</th>
+                    <th>Liczba zleceń</th>
+                    <th>Wypompowane (m³)</th>
+                    @if($showPrice)
+                        <th>Cena</th>
+                    @endif
                 @endif
             </tr>
         </thead>
         <tbody>
             @foreach($aggregatedJobs as $job)
-                <tr>
-                    <td>{{ $job->id }}</td>
-                    <td>{{ \Carbon\Carbon::parse($job->schedule)->format('Y-m-d') }}</td>
-                    <td>
-                        @if($job->address)
-                            {{$job->address->adres}} {{$job->address->numer}}, {{$job->address->miasto}}
-                        @else
-                            Brak
+                @if($addressId)
+                    <tr>
+                        <td>
+                            @if(!empty($job->id))
+                                <a href="{{ route('job', $job->id) }}">{{ $job->id }}</a>
+                            @else
+                                -
+                            @endif
+                        </td>
+                        <td>
+                            @if(!empty($job->schedule))
+                                {{ \Carbon\Carbon::parse($job->schedule)->format('Y-m-d') }}
+                            @else
+                                -
+                            @endif
+                        </td>
+                        <td>
+                            @if($job->address)
+                                {{ $job->address->adres }} {{ $job->address->numer }}, {{ $job->address->miasto }}
+                            @else
+                                Brak
+                            @endif
+                        </td>
+                        <td>{{ $job->count }}</td>
+                        <td>{{ $job->pumped }}</td>
+                        @if($showPrice)
+                            <td>{{ $job->price }}</td>
                         @endif
-                    </td>
-                    <td>{{ $job->pumped }}</td>
-                    <td>{{ $job->price }}</td>
-                    @if($showComments)
-                        <td>{{ $job->comment }}</td>
-                    @endif
-                </tr>
+                        @if($showComments)
+                            <td>{{ $job->comment }}</td>
+                        @endif
+                    </tr>
+                @else
+                    <tr>
+                        <td>
+                            @if($job->address)
+                                {{ $job->address->adres }} {{ $job->address->numer }}, {{ $job->address->miasto }}
+                            @else
+                                Brak
+                            @endif
+                        </td>
+                        <td>{{ $job->count }}</td>
+                        <td>{{ $job->pumped }}</td>
+                        @if($showPrice)
+                            <td>{{ $job->price }}</td>
+                        @endif
+                    </tr>
+                @endif
             @endforeach
         </tbody>
     </table>

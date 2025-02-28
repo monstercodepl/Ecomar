@@ -75,11 +75,15 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/jobs', [JobController::class, 'index'])->name('jobs');
 	Route::get('/moje-zlecenia', [JobController::class, 'index_client'])->name('client_jobs');
-	Route::post('/job', [JobController::class, 'update']);
+	Route::put('/job', [JobController::class, 'update'])->name('jobs.update');
 	Route::get('/job/new', [JobController::class, 'create'])->name('create-job');
 	Route::get('/job/{id}', [JobController::class, 'show'])->name('job');
 	Route::post('/job/new', [JobController::class, 'store']);
 	Route::post('/job/delete', [JobController::class, 'destroy']);
+
+	Route::get('/jobs/{id}/edit-partial', [\App\Http\Controllers\JobController::class, 'editPartial'])->name('jobs.editPartial');
+	Route::put('/jobs/update-partial', [\App\Http\Controllers\JobController::class, 'updatePartial'])->name('jobs.updatePartial');
+
 
 	Route::get('/wz', [WzController::class, 'index'])->name('wzs');
 	Route::get('/wz-create', [WzController::class, 'create'])->name('create-wz');
