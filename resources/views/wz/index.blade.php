@@ -1,104 +1,76 @@
 @extends('layouts.user_type.auth')
 
 @section('content')
-
 <div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card mb-4 mx-4">
-                <div class="card-header pb-0">
-                    <div class="d-flex flex-row justify-content-between">
-                        <div>
-                            <h5 class="mb-0">Wszystkie wydania</h5>
-                        </div>
-                        <a href="{{route('create-wz')}}" class="btn bg-gradient-primary btn-sm mb-0" type="button">+&nbsp; Nowa wz</a>
-                    </div>
-                </div>
-                <div class="card-body px-0 pt-0 pb-2">
-                    <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0" id="dataTable">
-                            <thead>
-                                <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        ID
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Numer
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Klient
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Adres
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Metry
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Cena
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Wysłano
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Zapłacono
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Akcje
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($wzs as $wz)
-                                    <tr>
-                                        <td class="ps-4">
-                                            <p class="text-xs font-weight-bold mb-0">{{$wz->id}}</p>
-                                        </td>
-                                        <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$wz->letter}}{{$wz->number}}/{{$wz->month}}/{{$wz->year}}</p>
-                                        </td>
-                                        <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$wz->client_name ?? 'brak'}}</p>
-                                        </td>
-                                        <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$wz->client_address ?? 'brak'}}</p>
-                                        </td>
-                                        <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$wz->amount ?? 'brak'}}</p>
-                                        </td>
-                                        <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">{{$wz->price ?? 'brak'}}</p>
-                                        </td>
-                                        <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0 @if($wz->sent)text-success @else text-danger @endif">@if($wz->sent)Tak @else Nie @endif</p>
-                                        </td>
-                                        <td class="text-center">
-                                            <p class="text-xs font-weight-bold mb-0">@if($wz->paid) Tak @else Nie @endif</p>
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="{{ route('wz-send', array('id' => $wz->id))}}">
-                                                @if($wz->sent)
-                                                    <button class="btn bg-danger text-white btn-md">Wyślij ponownie</button>
-                                                @else
-                                                    <button class="btn bg-success text-white btn-md">Wyślij</button>
-                                                @endif
-                                            </a>
-                                            <a href="{{ route('wz-download', array('id' => $wz->id))}}">
-                                                <button class="btn bg-success text-white btn-md">Pobierz</button>
-                                            </a>
-                                            <a href="{{ route('wz', array('id' => $wz->id)) }}">
-                                                <button class="btn bg-warning text-white btn-md">Edytuj</button>
-                                            </a>
-                                        </td> 
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+    <h5 class="mb-4">Wszystkie wydania (WZ)</h5>
+    
+    <!-- Formularz filtrowania po dacie -->
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label for="start_date">Data początkowa:</label>
+            <input type="date" id="start_date" class="form-control">
+        </div>
+        <div class="col-md-4">
+            <label for="end_date">Data końcowa:</label>
+            <input type="date" id="end_date" class="form-control">
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+            <button id="filterButton" class="btn btn-primary">Filtruj</button>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0" id="wz-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th class="text-center">Numer</th>
+                            <th class="text-center">Klient</th>
+                            <th class="text-center">Adres</th>
+                            <th class="text-center">Metry</th>
+                            <th class="text-center">Cena</th>
+                            <th class="text-center">Wysłano</th>
+                            <th class="text-center">Zapłacono</th>
+                            <th class="text-center">Akcje</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
 </div>
- 
+
+<script>
+$(document).ready(function() {
+    var table = $('#wz-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '{{ route("wz.data") }}',
+            data: function (d) {
+                d.start_date = $('#start_date').val();
+                d.end_date = $('#end_date').val();
+            }
+        },
+        columns: [
+            { data: 'id', name: 'wzs.id' },
+            { data: 'numer', name: 'numer' },
+            { data: 'client_name', name: 'wzs.client_name' },
+            { data: 'client_address', name: 'wzs.client_address' },
+            { data: 'amount', name: 'wzs.amount' },
+            { data: 'price', name: 'wzs.price' },
+            { data: 'sent', name: 'wzs.sent', render: function(data) { return data ? 'Tak' : 'Nie'; } },
+            { data: 'paid', name: 'wzs.paid', render: function(data) { return data ? 'Tak' : 'Nie'; } },
+            { data: 'actions', name: 'actions', orderable: false, searchable: false }
+        ]
+    });
+
+    // Obsługa filtrowania po dacie
+    $('#filterButton').click(function() {
+        table.ajax.reload();
+    });
+});
+</script>
 @endsection

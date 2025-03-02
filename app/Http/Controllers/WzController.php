@@ -10,9 +10,43 @@ use App\Mail\JobFinished;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
+
 
 class WzController extends Controller
 {
+
+    public function getWzs(Request $request)
+{
+    $query = Wz::query()->select('wzs.*');
+
+    // Filtracja po dacie utworzenia
+    if ($request->filled('start_date') && $request->filled('end_date')) {
+        $query->whereBetween('created_at', [$request->start_date, $request->end_date]);
+    } elseif ($request->filled('start_date')) {
+        $query->where('created_at', '>=', $request->start_date);
+    } elseif ($request->filled('end_date')) {
+        $query->where('created_at', '<=', $request->end_date);
+    }
+
+    return DataTables::eloquent($query)
+        ->addColumn('numer', function($wz) {
+            return $wz->letter . $wz->number . '/' . $wz->month . '/' . $wz->year;
+        })
+        ->addColumn('actions', function ($wz) {
+            return '<a href="'.route('wz-send', ['id' => $wz->id]).'">
+                        <button class="btn btn-success btn-sm">Wyślij</button>
+                    </a>
+                    <a href="'.route('wz-download', ['id' => $wz->id]).'">
+                        <button class="btn btn-primary btn-sm">Pobierz</button>
+                    </a>
+                    <a href="'.route('wz', ['id' => $wz->id]).'">
+                        <button class="btn btn-warning btn-sm">Edytuj</button>
+                    </a>';
+        })
+        ->rawColumns(['actions'])
+        ->make(true);
+}
 
     public function index()
     {

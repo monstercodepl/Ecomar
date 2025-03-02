@@ -104,7 +104,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/wz-send/{id}',[WzController::class, 'send'])->name('wz-send');
 	Route::get('/wz-download/{id}', [WzController::class, 'download'])->name('wz-download');
 	Route::post('/wz-save', [WzController::class, 'update']);
-
+	Route::get('/wz-data', [WzController::class, 'getWzs'])->name('wz.data');
 
 	Route::get('/trucks', [TruckController::class, 'index'])->name('trucks');
 	Route::get('/truck/new', [TruckController::class, 'create'])->name('create-truck');
