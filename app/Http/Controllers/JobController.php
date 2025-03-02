@@ -47,6 +47,9 @@ class JobController extends Controller
         }
 
         return DataTables::eloquent($query)
+            ->addColumn('address', function($job) {
+                return ($job->address->adres ?? ''). ' ' . ($job->address->numer ?? ''). ', ' . ($job->address->miasto ?? '');
+            })
             ->addColumn('wz', function($job) {
                 return $job->wz_letter . $job->wz_number . '/' . $job->wz_month . '/' . $job->wz_year;
             })

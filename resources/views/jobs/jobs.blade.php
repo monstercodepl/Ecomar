@@ -69,7 +69,7 @@ $(document).ready(function() {
         columns: [
             { data: 'id', name: 'jobs.id' },
             { data: 'address.adres', name: 'address.adres', defaultContent: '' },
-            { data: 'address.user.name', name: 'address.user.name', defaultContent: 'brak' },
+            { data: 'address', name: 'address.user.name', defaultContent: 'brak' },
             { data: 'driver.name', name: 'driver.name', defaultContent: '' },
             { data: 'schedule', name: 'jobs.schedule', render: function(data) { return data.substr(0, 10); }},
             { 
