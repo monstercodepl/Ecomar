@@ -16,7 +16,7 @@
 
         <div class="form-group">
             <label for="driver">Kierowca</label>
-            <select name="driver" id="driver" class="form-control select-2">
+            <select name="driver_id" id="driver" class="form-control select-2">
                 <option value=""></option>
                 @foreach($drivers as $driver)
                     <option value="{{ $driver->id }}" @if($job->driver_id == $driver->id) selected @endif>

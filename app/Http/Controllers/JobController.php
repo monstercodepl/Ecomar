@@ -171,7 +171,7 @@ class JobController extends Controller
         $data = $request->validate([
             'id'      => 'required|exists:jobs,id',
             'date'    => 'required|date',
-            'driver'  => 'nullable|exists:users,id',
+            'driver_id'  => 'nullable|exists:users,id',
             'comment' => 'nullable|string',
             'pumped'  => 'required|numeric',
             'price'   => 'required|numeric',
